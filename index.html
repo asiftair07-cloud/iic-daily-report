@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>IIC Daily Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ===================== RESET & BASE ===================== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:#f0ede8;
+  color:#1a1f2e;
+  min-height:100vh;
+}
+
+/* ===================== VARIABLES ===================== */
+:root{
+  --navy:#1c3254;
+  --navy2:#243d63;
+  --navy3:#2e4f7a;
+  --gold:#c9a44a;
+  --gold2:#e8d5a3;
+  --gold3:#f5ecd5;
+  --paper:#f0ede8;
+  --white:#ffffff;
+  --border:#e2dfd8;
+  --muted:#8b8fa8;
+  --text:#1a1f2e;
+  --fb:#4a7ab5;
+  --fb-bg:#deeaff;
+  --yt:#c0392b;
+  --yt-bg:#ffe0dd;
+  --green:#2a7d4f;
+  --red:#c0392b;
+  --r:14px;
+  --r2:10px;
+  --sh:0 4px 20px rgba(28,50,84,0.10);
+  --sh2:0 12px 40px rgba(28,50,84,0.18);
+}
+
+/* ===================== LAYOUT ===================== */
+#app{display:flex;flex-direction:column;min-height:100vh}
+.page{display:none;flex-direction:column;min-height:100vh}
+.page.active{display:flex}
+
+/* ===================== LOGIN PAGE ===================== */
+#loginPage{
+  background:linear-gradient(160deg,#1c3254 0%,#243d63 50%,#1a2d4a 100%);
+  align-items:center;justify-content:center;padding:24px;
+}
+.login-box{
+  background:var(--white);
+  border-radius:24px;
+  padding:36px 28px;
+  width:100%;max-width:360px;
+  box-shadow:var(--sh2);
+  text-align:center;
+}
+.login-logo{
+  width:68px;height:68px;border-radius:18px;
+  background:linear-gradient(135deg,var(--navy),var(--navy3));
+  margin:0 auto 16px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 16px rgba(28,50,84,0.3);
+  overflow:hidden;
+}
+.login-logo img{width:100%;height:100%;object-fit:cover;border-radius:18px}
+.login-logo .logo-default{
+  width:30px;height:30px;background:var(--gold);
+  border-radius:7px;transform:rotate(45deg);
+}
+.login-title{
+  font-size:22px;font-weight:800;color:var(--navy);
+  margin-bottom:4px;line-height:1.2;
+}
+.login-sub{font-size:13px;color:var(--muted);margin-bottom:28px}
+.login-field-label{
+  text-align:left;font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);
+  margin-bottom:6px;
+}
+.login-input{
+  width:100%;padding:14px 16px;border-radius:var(--r2);
+  border:1.5px solid var(--border);background:var(--paper);
+  font-size:15px;font-family:inherit;letter-spacing:3px;
+  text-align:center;margin-bottom:6px;color:var(--text);
+}
+.login-input:focus{outline:none;border-color:var(--gold);background:#fffdf5}
+.login-error{
+  color:var(--red);font-size:12px;font-weight:600;
+  min-height:18px;margin-bottom:10px;
+}
+.login-btn{
+  width:100%;padding:15px;border-radius:var(--r2);border:none;
+  background:var(--navy);color:#fff;font-size:15px;font-weight:700;
+  font-family:inherit;cursor:pointer;
+  transition:background 0.15s;
+}
+.login-btn:hover{background:var(--navy3)}
+.login-btn:active{transform:scale(0.99)}
+.login-hint{margin-top:14px;font-size:12px;color:var(--muted)}
+.login-hint a{color:var(--navy);font-weight:600;cursor:pointer;text-decoration:underline}
+.login-skip{
+  margin-top:10px;font-size:12px;color:var(--muted);cursor:pointer;
+  text-decoration:underline;
+}
+
+/* ===================== MAIN PAGE ===================== */
+#mainPage{background:var(--paper)}
+
+/* TOP BAR */
+.topbar{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy3) 100%);
+  padding:18px 16px 56px;color:#fff;position:relative;overflow:hidden;
+}
+.topbar::before{
+  content:'';position:absolute;right:-50px;top:-50px;
+  width:180px;height:180px;border-radius:50%;
+  background:rgba(201,164,74,0.12);pointer-events:none;
+}
+.topbar::after{
+  content:'';position:absolute;left:-30px;bottom:-60px;
+  width:140px;height:140px;border-radius:50%;
+  background:rgba(255,255,255,0.04);pointer-events:none;
+}
+.topbar-inner{position:relative;z-index:1}
+.topbar-row1{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}
+.brand{display:flex;align-items:center;gap:11px}
+.brand-icon{
+  width:44px;height:44px;border-radius:12px;
+  background:rgba(201,164,74,0.25);border:1.5px solid rgba(201,164,74,0.5);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;flex-shrink:0;
+}
+.brand-icon img{width:100%;height:100%;object-fit:cover;border-radius:11px}
+.brand-icon .bi-default{
+  width:18px;height:18px;background:var(--gold);
+  border-radius:4px;transform:rotate(45deg);
+}
+.brand-name{font-size:14px;font-weight:700;line-height:1.25;color:#fff}
+.brand-role{font-size:11px;color:rgba(255,255,255,0.6);margin-top:2px;text-transform:uppercase;letter-spacing:1px}
+.topbar-btns{display:flex;gap:8px;flex-shrink:0}
+.tbtn{
+  width:36px;height:36px;border-radius:10px;
+  background:rgba(255,255,255,0.12);border:none;
+  color:#fff;font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.tbtn:active{background:rgba(255,255,255,0.22)}
+
+/* DATE BAR */
+.date-bar{
+  background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.18);
+  border-radius:var(--r2);padding:12px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+  backdrop-filter:blur(4px);
+}
+.date-bar-left label{
+  display:block;font-size:10px;font-weight:700;
+  text-transform:uppercase;letter-spacing:1.5px;
+  color:rgba(255,255,255,0.6);margin-bottom:4px;
+}
+.date-bar-left input[type=date]{
+  background:transparent;border:none;
+  color:#fff;font-size:17px;font-weight:800;
+  font-family:inherit;padding:0;cursor:pointer;
+}
+.date-bar-left input[type=date]::-webkit-calendar-picker-indicator{
+  filter:invert(1);cursor:pointer;
+}
+.date-bar-right{text-align:right}
+.date-bar-right .sync-label{
+  font-size:10px;font-weight:700;text-transform:uppercase;
+  letter-spacing:1px;color:rgba(255,255,255,0.55);
+}
+.date-bar-right .sync-val{
+  font-size:12px;font-weight:700;color:rgba(255,255,255,0.85);margin-top:3px;
+}
+
+/* CONTENT PANEL (overlaps topbar) */
+.content{
+  background:var(--white);
+  border-radius:20px 20px 0 0;
+  margin-top:-40px;
+  position:relative;z-index:2;
+  min-height:calc(100vh - 160px);
+  padding-bottom:100px;
+}
+
+/* PLATFORM TABS */
+.ptabs{display:flex;gap:8px;padding:18px 16px 0}
+.ptab{
+  flex:1;padding:11px 8px;border-radius:var(--r2);
+  text-align:center;font-size:14px;font-weight:700;
+  border:2px solid transparent;cursor:pointer;
+  transition:all 0.15s;user-select:none;
+}
+.ptab.fb{background:var(--fb-bg);color:var(--fb)}
+.ptab.fb.on{background:var(--fb);color:#fff;border-color:var(--fb)}
+.ptab.yt{background:var(--yt-bg);color:var(--yt)}
+.ptab.yt.on{background:var(--yt);color:#fff;border-color:var(--yt)}
+
+/* SUB NAV */
+.subnav{
+  display:flex;gap:0;padding:0 16px;
+  border-bottom:1.5px solid var(--border);margin-top:16px;
+}
+.snav{
+  padding:0 4px 12px;margin-right:24px;
+  font-size:14px;font-weight:700;color:var(--muted);
+  cursor:pointer;border-bottom:2.5px solid transparent;
+  white-space:nowrap;
+}
+.snav.on{color:var(--navy);border-bottom-color:var(--gold)}
+
+/* STATUS */
+.status-bar{
+  margin:12px 16px 0;padding:10px 14px;
+  border-radius:var(--r2);font-size:13px;font-weight:600;
+  display:none;
+}
+.status-bar.show{display:block}
+.status-bar.ok{background:#e0f5ea;color:var(--green)}
+.status-bar.err{background:#fde8e6;color:var(--red)}
+.status-bar.info{background:var(--fb-bg);color:var(--fb)}
+
+/* ===================== ENTRY VIEW ===================== */
+#entryView{display:block}
+#historyView{display:none}
+
+/* SECTION */
+.sec{
+  margin:16px 16px 0;
+  background:var(--white);border-radius:var(--r);
+  border:1px solid var(--border);overflow:hidden;
+  box-shadow:var(--sh);
+}
+.sec-head{
+  padding:12px 16px 10px;
+  font-size:10.5px;font-weight:800;text-transform:uppercase;
+  letter-spacing:1.5px;color:var(--muted);
+  background:var(--paper);border-bottom:1px solid var(--border);
+}
+
+/* FIELD ROW */
+.frow{
+  display:flex;align-items:center;
+  justify-content:space-between;
+  padding:13px 16px;
+  border-bottom:1px solid var(--border);
+  gap:12px;
+}
+.frow:last-child{border-bottom:none}
+.frow-label{font-size:14px;font-weight:600;flex:1;color:var(--text)}
+.frow-hint{display:block;font-size:11px;color:var(--muted);font-weight:400;margin-top:2px}
+
+/* STEPPER */
+.stepper{
+  display:flex;align-items:center;gap:0;
+  background:#f0ede8;border-radius:10px;overflow:hidden;flex-shrink:0;
+}
+.st-btn{
+  width:38px;height:38px;border:none;background:transparent;
+  font-size:22px;font-weight:600;color:var(--navy);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  user-select:none;line-height:1;
+}
+.st-btn:active{background:rgba(28,50,84,0.12)}
+.st-val{
+  width:44px;text-align:center;border:none;background:transparent;
+  font-size:17px;font-weight:800;color:var(--navy);
+  font-family:inherit;-moz-appearance:textfield;
+}
+.st-val::-webkit-outer-spin-button,.st-val::-webkit-inner-spin-button{-webkit-appearance:none}
+
+/* TEXT INPUT for totals */
+.tinput{
+  width:118px;text-align:right;
+  border:1.5px solid var(--border);border-radius:var(--r2);
+  padding:10px 12px;font-size:16px;font-weight:800;
+  color:var(--navy);font-family:inherit;background:var(--white);
+}
+.tinput:focus{outline:none;border-color:var(--gold);background:#fffdf5}
+.tinput::placeholder{color:#c8cad6;font-weight:500}
+
+/* ===================== BOTTOM BAR ===================== */
+.bottombar{
+  position:fixed;bottom:0;left:0;right:0;
+  background:var(--white);border-top:1px solid var(--border);
+  padding:12px 16px max(12px,env(safe-area-inset-bottom));
+  display:flex;gap:10px;z-index:50;
+  box-shadow:0 -4px 20px rgba(0,0,0,0.07);
+}
+.bbar-btn{
+  flex:1;padding:14px;border-radius:var(--r2);border:none;
+  font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;
+}
+.bbar-btn.ghost{background:#f0ede8;color:var(--navy)}
+.bbar-btn.primary{background:var(--navy);color:#fff}
+.bbar-btn:active{opacity:0.85;transform:scale(0.99)}
+.bbar-btn:disabled{opacity:0.5;pointer-events:none}
+
+/* ===================== HISTORY VIEW ===================== */
+.month-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 16px 0;
+}
+.month-label{font-size:19px;font-weight:800;color:var(--navy)}
+.mnav-btns{display:flex;gap:8px}
+.mnav-btn{
+  width:34px;height:34px;border-radius:8px;
+  border:1.5px solid var(--border);background:var(--white);
+  font-size:15px;cursor:pointer;color:var(--navy);
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* SUMMARY TILES */
+.summary-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:10px;padding:14px 16px 0;
+}
+.sum-tile{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r);padding:14px;box-shadow:var(--sh);
+}
+.sum-tile-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+.sum-tile-val{font-size:26px;font-weight:900;color:var(--navy);margin-top:4px}
+.sum-tile.wide{grid-column:span 2}
+
+/* HISTORY LIST */
+.hist-list{padding:0 16px;margin-top:12px}
+.hist-row{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r);padding:13px 16px;
+  margin-bottom:8px;
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;box-shadow:var(--sh);
+  transition:border-color 0.1s;
+}
+.hist-row:active{border-color:var(--gold);background:#fffdf5}
+.hist-date{font-size:15px;font-weight:800;color:var(--navy)}
+.hist-meta{font-size:12px;color:var(--muted);margin-top:2px}
+.hist-arrow{font-size:18px;color:var(--gold);flex-shrink:0}
+.empty-msg{
+  padding:32px 20px;text-align:center;color:var(--muted);
+  font-size:13px;line-height:1.6;
+  border:1.5px dashed var(--border);border-radius:var(--r);
+  margin:16px;
+}
+
+/* ===================== MODALS ===================== */
+.overlay{
+  position:fixed;inset:0;background:rgba(20,30,50,0.55);
+  z-index:100;display:none;
+  align-items:flex-end;justify-content:center;
+}
+.overlay.show{display:flex}
+.sheet{
+  background:var(--white);border-radius:22px 22px 0 0;
+  width:100%;max-width:600px;
+  padding:22px 18px max(22px,env(safe-area-inset-bottom));
+  max-height:90vh;overflow-y:auto;
+}
+.sheet-title{font-size:18px;font-weight:800;color:var(--navy);margin-bottom:4px}
+.sheet-sub{font-size:12px;color:var(--muted);margin-bottom:20px}
+.field-label{
+  display:block;font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:1.2px;
+  color:var(--muted);margin-top:16px;margin-bottom:6px;
+}
+.field-label:first-of-type{margin-top:0}
+.text-field{
+  width:100%;padding:12px 14px;border-radius:var(--r2);
+  border:1.5px solid var(--border);background:var(--paper);
+  font-size:14px;font-family:inherit;color:var(--text);
+}
+.text-field:focus{outline:none;border-color:var(--gold);background:#fffdf5}
+.logo-row{display:flex;align-items:center;gap:14px;margin-top:6px}
+.logo-thumb{
+  width:56px;height:56px;border-radius:13px;
+  border:1.5px solid var(--gold);background:var(--paper);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;flex-shrink:0;
+}
+.logo-thumb img{width:100%;height:100%;object-fit:cover}
+.logo-thumb .ld{
+  width:18px;height:18px;background:var(--gold);
+  border-radius:4px;transform:rotate(45deg);
+}
+.file-btn{
+  padding:10px 14px;border-radius:var(--r2);
+  border:1.5px dashed var(--border);background:transparent;
+  font-size:13px;font-weight:600;color:var(--navy);
+  cursor:pointer;font-family:inherit;
+}
+.sheet-actions{display:flex;gap:10px;margin-top:22px}
+.sheet-btn{
+  flex:1;padding:14px;border-radius:var(--r2);border:none;
+  font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;
+}
+.sheet-btn.cancel{background:#f0ede8;color:var(--navy)}
+.sheet-btn.save{background:var(--navy);color:#fff}
+.sheet-btn:active{opacity:0.85}
+
+/* ===================== PREVIEW OVERLAY ===================== */
+#previewOverlay{
+  position:fixed;inset:0;background:rgba(14,22,38,0.93);
+  z-index:200;display:none;
+  flex-direction:column;
+}
+#previewOverlay.show{display:flex}
+.prev-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 18px;color:#fff;flex-shrink:0;
+}
+.prev-title{font-size:16px;font-weight:800}
+.prev-close{
+  width:36px;height:36px;border-radius:9px;
+  background:rgba(255,255,255,0.12);border:none;
+  color:#fff;font-size:18px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.prev-body{
+  flex:1;overflow:auto;padding:8px 16px 16px;
+  display:flex;justify-content:center;
+}
+.prev-foot{
+  padding:14px 16px max(14px,env(safe-area-inset-bottom));
+  display:flex;gap:10px;flex-shrink:0;
+}
+.prev-btn{
+  flex:1;padding:14px;border-radius:var(--r2);border:none;
+  font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;
+}
+.prev-btn.dl{background:var(--gold);color:#1a1a00}
+.prev-btn.cl{background:rgba(255,255,255,0.12);color:#fff}
+.prev-btn:active{opacity:0.85}
+
+/* ===================== REPORT CARD ===================== */
+#reportCard{
+  width:390px;font-family:'Inter',system-ui,sans-serif;
+  background:#fff;border-radius:16px;overflow:hidden;
+  box-shadow:0 16px 48px rgba(0,0,0,0.35);
+  flex-shrink:0;
+}
+.rc-head{display:flex;align-items:stretch}
+.rc-logo-box{
+  width:86px;flex-shrink:0;
+  background:#fff8e0;border-right:1.5px solid #e8d5a3;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:10px 6px;gap:4px;
+}
+.rc-logo-box img{width:64px;height:64px;object-fit:cover;border-radius:10px}
+.rc-logo-box .rc-logo-def{
+  width:26px;height:26px;background:var(--navy);border-radius:6px;
+  position:relative;
+}
+.rc-logo-box .rc-logo-def::after{
+  content:'';position:absolute;top:50%;left:50%;
+  width:9px;height:9px;background:var(--gold);
+  transform:translate(-50%,-50%) rotate(45deg);
+  border-radius:2px;
+}
+.rc-logo-text{
+  font-size:7.5px;font-weight:800;color:var(--navy);
+  text-align:center;line-height:1.3;
+}
+.rc-title-area{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  padding:14px 10px;
+}
+.rc-main-title{
+  font-size:26px;font-weight:900;color:#fff;
+  letter-spacing:0.3px;text-align:center;
+}
+.rc-head.fb .rc-title-area{background:linear-gradient(135deg,#4a7ab5,#5f8fcc)}
+.rc-head.yt .rc-title-area{background:linear-gradient(135deg,#c0392b,#d94f3d)}
+
+.rc-date-band{
+  padding:8px 14px;
+  background:linear-gradient(180deg,#fff,#f0ede8);
+}
+.rc-date-pill{
+  text-align:center;padding:8px 12px;
+  border-radius:8px;font-size:17px;font-weight:900;
+}
+.rc-date-pill.fb{background:linear-gradient(180deg,#e8f1ff,#d0e4ff);color:var(--navy)}
+.rc-date-pill.yt{background:linear-gradient(180deg,#ffe8e5,#ffd4d0);color:#a0281c}
+
+.rc-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.rc-table th{
+  background:#4a7ab5;color:#fff;
+  padding:7px 6px;font-weight:800;font-size:11px;
+}
+.rc-table.yt th{background:#5a80b0}
+.rc-table td{
+  padding:7px 8px;
+  border-bottom:1px solid #dde4ef;
+  font-weight:600;color:#222;
+  vertical-align:middle;
+}
+.rc-table tr:nth-child(odd) td{background:#eef2f8}
+.rc-table tr:nth-child(even) td{background:#f8fafd}
+.rc-table .td-sr{text-align:center;font-weight:800;width:28px;font-size:12px}
+.rc-table .td-num{text-align:center;font-weight:900;color:#c0392b}
+.rc-table .td-side{
+  background:#e8eef7;text-align:center;
+  font-weight:800;color:var(--navy);
+  font-size:12px;vertical-align:middle;line-height:1.4;
+}
+.rc-table .td-side.hi{background:#fffacc;color:#7a5800;font-size:11px}
+.rc-foot{
+  padding:8px 14px;text-align:center;
+  font-size:11px;color:#888;background:#f4f2ee;
+  border-top:1px solid #e0ddd6;
+}
+
+/* ===================== SPINNER ===================== */
+.spin{
+  display:inline-block;width:14px;height:14px;
+  border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;
+  border-radius:50%;animation:rot 0.6s linear infinite;
+  vertical-align:middle;margin-right:6px;
+}
+@keyframes rot{to{transform:rotate(360deg)}}
+
+/* ===================== UTILITIES ===================== */
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- =================== LOGIN PAGE =================== -->
+<div id="loginPage" class="page active">
+  <div class="login-box">
+    <div class="login-logo" id="loginLogo">
+      <div class="logo-default"></div>
+    </div>
+    <div class="login-title" id="loginTitle">Daily Report Dashboard</div>
+    <div class="login-sub">Islamic Information Centre</div>
+
+    <div class="login-field-label">Enter Your Password</div>
+    <input class="login-input" type="password" id="loginPw" placeholder="• • • • • • • •"
+      autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+    <div class="login-error" id="loginErr"></div>
+    <button class="login-btn" id="loginBtn" onclick="doLogin()">Sign In</button>
+
+    <div class="login-hint">
+      <a onclick="openSettings(true)">⚙ First-time setup — connect Google Sheet</a>
+    </div>
+    <div class="login-skip" onclick="skipLogin()">Open in Preview Mode (no login required)</div>
+  </div>
+</div>
+
+<!-- =================== MAIN PAGE =================== -->
+<div id="mainPage" class="page">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-row1">
+        <div class="brand">
+          <div class="brand-icon" id="brandIcon"><div class="bi-default"></div></div>
+          <div>
+            <div class="brand-name" id="brandName">Islamic Information Centre</div>
+            <div class="brand-role" id="brandRole">Editor</div>
+          </div>
+        </div>
+        <div class="topbar-btns">
+          <button class="tbtn" onclick="openSettings(false)" title="Settings">⚙</button>
+          <button class="tbtn" onclick="doLogout()" title="Sign out">⏏</button>
+        </div>
+      </div>
+      <div class="date-bar">
+        <div class="date-bar-left">
+          <label>Report Date</label>
+          <input type="date" id="dateInput" onchange="onDateChange()">
+        </div>
+        <div class="date-bar-right">
+          <div class="sync-label">Sheet Sync</div>
+          <div class="sync-val" id="syncVal">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT PANEL -->
+  <div class="content">
+
+    <!-- PLATFORM TABS -->
+    <div class="ptabs">
+      <div class="ptab fb on" id="tabFb" onclick="switchPlatform('fb')">📘 Facebook</div>
+      <div class="ptab yt" id="tabYt" onclick="switchPlatform('yt')">▶️ YouTube</div>
+    </div>
+
+    <!-- SUB NAV -->
+    <div class="subnav">
+      <div class="snav on" id="snavEntry" onclick="switchView('entry')">Today's Entry</div>
+      <div class="snav" id="snavHistory" onclick="switchView('history')">Monthly History</div>
+    </div>
+
+    <!-- STATUS BAR -->
+    <div class="status-bar" id="statusBar"></div>
+
+    <!-- =========== ENTRY VIEW =========== -->
+    <div id="entryView">
+
+      <!-- FACEBOOK FORM -->
+      <div id="fbForm">
+        <div class="sec">
+          <div class="sec-head">📹 Today's Activities</div>
+          <div class="frow"><span class="frow-label">Publish New Video</span>
+            <div class="stepper"><button class="st-btn" onclick="adj('fb_nv',-1)">−</button><input class="st-val" type="number" id="fb_nv" value="0" min="0"><button class="st-btn" onclick="adj('fb_nv',1)">+</button></div></div>
+          <div class="frow"><span class="frow-label">Publish Clip From Old Video</span>
+            <div class="stepper"><button class="st-btn" onclick="adj('fb_co',-1)">−</button><input class="st-val" type="number" id="fb_co" value="0" min="0"><button class="st-btn" onclick="adj('fb_co',1)">+</button></div></div>
+          <div class="frow"><span class="frow-label">Short New Video</span>
+            <div class="stepper"><button class="st-btn" onclick="adj('fb_sn',-1)">−</button><input class="st-val" type="number" id="fb_sn" value="0" min="0"><button class="st-btn" onclick="adj('fb_sn',1)">+</button></div></div>
+          <div class="frow"><span class="frow-label">Short From Old Video Clip</span>
+            <div class="stepper"><button class="st-btn" onclick="adj('fb_so',-1)">−</button><input class="st-val" type="number" id="fb_so" value="0" min="0"><button class="st-btn" onclick="adj('fb_so',1)">+</button></div></div>
+          <div class="frow"><span class="frow-label">Community Post</span>
+            <div class="stepper"><button class="st-btn" onclick="adj('fb_cp',-1)">−</button><input class="st-val" type="number" id="fb_cp" value="0" min="0"><button class="st-btn" onclick="adj('fb_cp',1)">+</button></div></div>
+          <div class="frow"><span class="frow-label">Thumbnail</span>
+            <div class="stepper"><button class="st-btn" onclick="adj('fb_th',-1)">−</button><input class="st-val" type="number" id="fb_th" value="0" min="0"><button class="st-btn" onclick="adj('fb_th',1)">+</button></div></div>
+          <div class="frow"><span class="frow-label">Live</span>
+            <div class="stepper"><button class="st-btn" onclick="adj('fb_lv',-1)">−</button><input class="st-val" type="number" id="fb_lv" value="0" min="0"><button class="st-btn" onclick="adj('fb_lv',1)">+</button></div></div>
+        </div>
+        <div class="sec">
+          <div class="sec-head">📊 Current Running Totals</div>
+          <div class="frow">
+            <span class="frow-label">Total Likes<span class="frow-hint">e.g. 25.1K or 25100</span></span>
+            <input class="tinput" type="text" id="fb_lk" placeholder="25K">
+          </div>
+          <div class="frow">
+            <span class="frow-label">Total Followers<span class="frow-hint">e.g. 53.2K or 53200</span></span>
+            <input class="tinput" type="text" id="fb_fw" placeholder="53K">
+          </div>
+        </div>
+        <div class="sec">
+          <div class="sec-head">📅 Weekly</div>
+          <div class="frow"><span class="frow-label">Weekly Dars (this week)</span>
+            <div class="stepper"><button class="st-btn" onclick="adj('fb_wd',-1)">−</button><input class="st-val" type="number" id="fb_wd" value="1" min="0"><button class="st-btn" onclick="adj('fb_wd',1)">+</button></div></div>
+        </div>
+      </div>
+
+      <!-- YOUTUBE FORM -->
+      <div id="ytForm" class="hidden">
+        <div class="sec">
+          <div class="sec-head">📹 Today's Activities</div>
+          <div class="frow"><span class="frow-label">Publish New Video</span>
+            <div class="stepper"><button class="st-btn" onclick="adj('yt_nv',-1)">−</button><input class="st-val" type="number" id="yt_nv" value="0" min="0"><button class="st-btn" onclick="adj('yt_nv',1)">+</button></div></div>
+          <div class="frow"><span class="frow-label">Publish Clip From Old Video</span>
+            <div class="stepper"><button class="st-btn" onclick="adj('yt_co',-1)">−</button><input class="st-val" type="number" id="yt_co" value="0" min="0"><button class="st-btn" onclick="adj('yt_co',1)">+</button></div></div>
+          <div class="frow"><span class="frow-label">Short New Video</span>
+            <div class="stepper"><button class="st-btn" onclick="adj('yt_sn',-1)">−</button><input class="st-val" type="number" id="yt_sn" value="0" min="0"><button class="st-btn" onclick="adj('yt_sn',1)">+</button></div></div>
+          <div class="frow"><span class="frow-label">Short From Old Video Clip</span>
+            <div class="stepper"><button class="st-btn" onclick="adj('yt_so',-1)">−</button><input class="st-val" type="number" id="yt_so" value="0" min="0"><button class="st-btn" onclick="adj('yt_so',1)">+</button></div></div>
+          <div class="frow"><span class="frow-label">Community Post</span>
+            <div class="stepper"><button class="st-btn" onclick="adj('yt_cp',-1)">−</button><input class="st-val" type="number" id="yt_cp" value="0" min="0"><button class="st-btn" onclick="adj('yt_cp',1)">+</button></div></div>
+          <div class="frow"><span class="frow-label">Thumbnail</span>
+            <div class="stepper"><button class="st-btn" onclick="adj('yt_th',-1)">−</button><input class="st-val" type="number" id="yt_th" value="0" min="0"><button class="st-btn" onclick="adj('yt_th',1)">+</button></div></div>
+          <div class="frow"><span class="frow-label">Live</span>
+            <div class="stepper"><button class="st-btn" onclick="adj('yt_lv',-1)">−</button><input class="st-val" type="number" id="yt_lv" value="0" min="0"><button class="st-btn" onclick="adj('yt_lv',1)">+</button></div></div>
+        </div>
+        <div class="sec">
+          <div class="sec-head">📊 Current Running Totals</div>
+          <div class="frow">
+            <span class="frow-label">New Subscribers Today<span class="frow-hint">today's gain, e.g. 43</span></span>
+            <div class="stepper"><button class="st-btn" onclick="adj('yt_sg',-1)">−</button><input class="st-val" type="number" id="yt_sg" value="0" min="0"><button class="st-btn" onclick="adj('yt_sg',1)">+</button></div>
+          </div>
+          <div class="frow">
+            <span class="frow-label">Total Subscribers<span class="frow-hint">e.g. 7,326</span></span>
+            <input class="tinput" type="text" id="yt_st" placeholder="7,326">
+          </div>
+          <div class="frow">
+            <span class="frow-label">Views Today<span class="frow-hint">today's views, e.g. 9,209</span></span>
+            <input class="tinput" type="text" id="yt_vt" placeholder="9,209">
+          </div>
+          <div class="frow">
+            <span class="frow-label">Total Views (all time)<span class="frow-hint">e.g. 799.3K</span></span>
+            <input class="tinput" type="text" id="yt_va" placeholder="799.3K">
+          </div>
+        </div>
+        <div class="sec">
+          <div class="sec-head">📅 Weekly & Pending</div>
+          <div class="frow"><span class="frow-label">Weekly Dars (this week)</span>
+            <div class="stepper"><button class="st-btn" onclick="adj('yt_wd',-1)">−</button><input class="st-val" type="number" id="yt_wd" value="1" min="0"><button class="st-btn" onclick="adj('yt_wd',1)">+</button></div></div>
+          <div class="frow"><span class="frow-label">Pending For Approval</span>
+            <div class="stepper"><button class="st-btn" onclick="adj('yt_pa',-1)">−</button><input class="st-val" type="number" id="yt_pa" value="0" min="0"><button class="st-btn" onclick="adj('yt_pa',1)">+</button></div></div>
+        </div>
+      </div>
+    </div><!-- /entryView -->
+
+    <!-- =========== HISTORY VIEW =========== -->
+    <div id="historyView" class="hidden">
+      <div class="month-nav">
+        <div class="mnav-btns"><button class="mnav-btn" onclick="changeMonth(-1)">‹</button></div>
+        <div class="month-label" id="monthLabel">June 2026</div>
+        <div class="mnav-btns"><button class="mnav-btn" onclick="changeMonth(1)">›</button></div>
+      </div>
+      <div class="summary-grid" id="summaryGrid"></div>
+      <div class="hist-list" id="histList"></div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /mainPage -->
+
+</div><!-- /app -->
+
+<!-- BOTTOM BAR (entry mode only) -->
+<div class="bottombar" id="bottomBar">
+  <button class="bbar-btn ghost" onclick="generatePreview()">👁 Preview</button>
+  <button class="bbar-btn primary" id="saveBtn" onclick="saveEntry()">💾 Save & Generate</button>
+</div>
+
+<!-- =================== SETTINGS SHEET =================== -->
+<div class="overlay" id="settingsOverlay">
+  <div class="sheet">
+    <div class="sheet-title">Settings</div>
+    <div class="sheet-sub">Connect Google Sheet for saving data, sharing, and history across devices.</div>
+
+    <label class="field-label">Google Apps Script URL</label>
+    <input class="text-field" type="url" id="settUrl" placeholder="https://script.google.com/macros/s/.../exec">
+
+    <div id="settBranding">
+      <label class="field-label">Company / Centre Name</label>
+      <input class="text-field" type="text" id="settName" placeholder="Islamic Information Centre">
+
+      <label class="field-label">Logo</label>
+      <div class="logo-row">
+        <div class="logo-thumb" id="settLogoThumb"><div class="ld"></div></div>
+        <div>
+          <input type="file" id="logoFileInput" accept="image/*" style="display:none" onchange="onLogoFile(event)">
+          <button class="file-btn" onclick="document.getElementById('logoFileInput').click()">📁 Choose Logo Image</button>
+          <div style="font-size:11px;color:var(--muted);margin-top:5px">Square PNG or JPG, any size</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet-actions">
+      <button class="sheet-btn cancel" onclick="closeSettings()">Cancel</button>
+      <button class="sheet-btn save" onclick="saveSettings()">Save Settings</button>
+    </div>
+  </div>
+</div>
+
+<!-- =================== PREVIEW OVERLAY =================== -->
+<div id="previewOverlay">
+  <div class="prev-head">
+    <div class="prev-title" id="prevTitle">Report Preview</div>
+    <button class="prev-close" onclick="closePreview()">✕</button>
+  </div>
+  <div class="prev-body">
+    <div id="reportCard"></div>
+  </div>
+  <div class="prev-foot">
+    <button class="prev-btn cl" onclick="closePreview()">Close</button>
+    <button class="prev-btn dl" onclick="downloadCard()">⬇ Download Image</button>
+  </div>
+</div>
+
+<!-- html2canvas for image capture -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+  integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+var st = {
+  platform: 'fb',
+  view: 'entry',
+  role: null,        // 'editor' | 'viewer' | 'preview'
+  pw: '',
+  companyName: 'Islamic Information Centre',
+  logoB64: '',
+  scriptUrl: '',
+  histMonth: new Date().getMonth() + 1,
+  histYear: new Date().getFullYear(),
+  monthData: { fb: null, yt: null },
+  pendingLogo: ''
+};
+
+var MONTHS = ['January','February','March','April','May','June',
+              'July','August','September','October','November','December'];
+
+// ============================================================
+// INIT
+// ============================================================
+window.addEventListener('load', function() {
+  // Load persisted settings
+  try {
+    var saved = localStorage.getItem('iic_settings');
+    if (saved) {
+      var s = JSON.parse(saved);
+      st.companyName = s.companyName || st.companyName;
+      st.logoB64 = s.logoB64 || '';
+      st.scriptUrl = s.scriptUrl || '';
+    }
+  } catch(e) {}
+
+  // Set today's date
+  document.getElementById('dateInput').value = todayISO();
+
+  // Apply branding on login screen
+  applyBranding();
+
+  // Try restore session
+  try {
+    var savedRole = sessionStorage.getItem('iic_r');
+    var savedPw   = sessionStorage.getItem('iic_p');
+    if (savedRole && savedPw) {
+      st.role = savedRole;
+      st.pw   = savedPw;
+      showMain();
+    }
+  } catch(e) {}
+
+  // Wire up all inputs to auto-save draft
+  wireInputs();
+});
+
+function wireInputs() {
+  var ids = allFieldIds();
+  for (var i = 0; i < ids.length; i++) {
+    (function(id) {
+      var el = document.getElementById(id);
+      if (el) el.addEventListener('change', saveDraft);
+    })(ids[i]);
+  }
+}
+
+// ============================================================
+// AUTH / LOGIN
+// ============================================================
+function doLogin() {
+  var pw = document.getElementById('loginPw').value.trim();
+  document.getElementById('loginErr').textContent = '';
+
+  if (!pw) {
+    document.getElementById('loginErr').textContent = 'Please enter a password.';
+    return;
+  }
+
+  if (!st.scriptUrl) {
+    document.getElementById('loginErr').textContent =
+      'No Google Sheet connected. Use the Setup link below, or use Preview Mode.';
+    return;
+  }
+
+  var btn = document.getElementById('loginBtn');
+  btn.innerHTML = '<span class="spin"></span>Checking...';
+  btn.disabled = true;
+
+  apiPost({ action: 'login', password: pw }, function(data, err) {
+    btn.innerHTML = 'Sign In';
+    btn.disabled = false;
+
+    if (err) {
+      document.getElementById('loginErr').textContent =
+        'Could not reach Google Sheet. Check the URL in Settings.';
+      return;
+    }
+    if (data.success) {
+      st.role = data.role;
+      st.pw   = pw;
+      try {
+        sessionStorage.setItem('iic_r', st.role);
+        sessionStorage.setItem('iic_p', st.pw);
+      } catch(e) {}
+      showMain();
+    } else {
+      document.getElementById('loginErr').textContent =
+        data.error || 'Incorrect password. Try again.';
+    }
+  });
+}
+
+function skipLogin() {
+  st.role = 'preview';
+  st.pw   = '';
+  showMain();
+}
+
+function doLogout() {
+  st.role = null;
+  st.pw   = '';
+  try { sessionStorage.removeItem('iic_r'); sessionStorage.removeItem('iic_p'); } catch(e) {}
+  document.getElementById('loginPw').value = '';
+  document.getElementById('loginErr').textContent = '';
+  showPage('loginPage');
+}
+
+function showMain() {
+  // Set role label
+  var roleLabels = { editor: 'Editor', viewer: 'View Only', preview: 'Preview Mode' };
+  document.getElementById('brandRole').textContent = roleLabels[st.role] || '';
+
+  // In viewer/preview mode, disable editing inputs
+  if (st.role !== 'editor') {
+    lockInputs(true);
+    document.getElementById('saveBtn').disabled = true;
+    document.getElementById('saveBtn').textContent = '(View Only)';
+  } else {
+    lockInputs(false);
+    document.getElementById('saveBtn').disabled = false;
+    document.getElementById('saveBtn').textContent = '💾 Save & Generate';
+  }
+
+  applyBranding();
+  showPage('mainPage');
+  loadDraft();
+  if (st.scriptUrl) fetchMonthData();
+}
+
+function lockInputs(lock) {
+  var stepBtns = document.querySelectorAll('.st-btn');
+  var stepVals = document.querySelectorAll('.st-val');
+  var textInputs = document.querySelectorAll('.tinput');
+  var all = Array.prototype.slice.call(stepBtns)
+    .concat(Array.prototype.slice.call(stepVals))
+    .concat(Array.prototype.slice.call(textInputs));
+  for (var i = 0; i < all.length; i++) {
+    if (lock) {
+      all[i].setAttribute('disabled', 'disabled');
+    } else {
+      all[i].removeAttribute('disabled');
+    }
+  }
+}
+
+// ============================================================
+// PAGE NAVIGATION
+// ============================================================
+function showPage(id) {
+  var pages = document.querySelectorAll('.page');
+  for (var i = 0; i < pages.length; i++) pages[i].classList.remove('active');
+  document.getElementById(id).classList.add('active');
+}
+
+function switchPlatform(p) {
+  st.platform = p;
+
+  // Update tabs
+  document.getElementById('tabFb').className = 'ptab fb' + (p === 'fb' ? ' on' : '');
+  document.getElementById('tabYt').className = 'ptab yt' + (p === 'yt' ? ' on' : '');
+
+  // Show/hide forms
+  document.getElementById('fbForm').className  = (p === 'fb') ? '' : 'hidden';
+  document.getElementById('ytForm').className  = (p === 'yt') ? '' : 'hidden';
+
+  hideStatus();
+
+  if (st.view === 'history') renderHistory();
+}
+
+function switchView(v) {
+  st.view = v;
+
+  document.getElementById('snavEntry').className   = 'snav' + (v === 'entry'   ? ' on' : '');
+  document.getElementById('snavHistory').className = 'snav' + (v === 'history' ? ' on' : '');
+
+  document.getElementById('entryView').style.display   = (v === 'entry')   ? 'block' : 'none';
+  document.getElementById('historyView').style.display = (v === 'history') ? 'block' : 'none';
+  document.getElementById('bottomBar').style.display   = (v === 'entry')   ? 'flex'  : 'none';
+
+  if (v === 'history') {
+    var d = new Date(document.getElementById('dateInput').value + 'T00:00:00');
+    st.histMonth = d.getMonth() + 1;
+    st.histYear  = d.getFullYear();
+    if (st.scriptUrl) fetchMonthData();
+    renderHistory();
+  }
+}
+
+// ============================================================
+// STEPPER ADJUST
+// ============================================================
+function adj(id, delta) {
+  if (st.role !== 'editor') return;
+  var el = document.getElementById(id);
+  if (!el) return;
+  var v = parseInt(el.value || '0', 10) + delta;
+  if (v < 0) v = 0;
+  el.value = v;
+  saveDraft();
+}
+
+// ============================================================
+// DATE
+// ============================================================
+function todayISO() {
+  var d = new Date();
+  var y = d.getFullYear();
+  var m = String(d.getMonth() + 1);
+  var day = String(d.getDate());
+  if (m.length < 2) m = '0' + m;
+  if (day.length < 2) day = '0' + day;
+  return y + '-' + m + '-' + day;
+}
+
+function isoToDisplay(iso) {
+  var p = iso.split('-');
+  return p[2] + '/' + p[1] + '/' + p[0];
+}
+
+function onDateChange() {
+  saveDraft();
+  loadDraft();
+  if (st.scriptUrl) fetchMonthData();
+}
+
+// ============================================================
+// DRAFT — per-date local storage
+// ============================================================
+function allFieldIds() {
+  return ['fb_nv','fb_co','fb_sn','fb_so','fb_cp','fb_th','fb_lv','fb_lk','fb_fw','fb_wd',
+          'yt_nv','yt_co','yt_sn','yt_so','yt_cp','yt_th','yt_lv','yt_sg','yt_st','yt_vt','yt_va','yt_wd','yt_pa'];
+}
+
+function saveDraft() {
+  var date = document.getElementById('dateInput').value;
+  var d = {};
+  var ids = allFieldIds();
+  for (var i = 0; i < ids.length; i++) {
+    var el = document.getElementById(ids[i]);
+    if (el) d[ids[i]] = el.value;
+  }
+  try { localStorage.setItem('iic_d_' + date, JSON.stringify(d)); } catch(e) {}
+}
+
+function loadDraft() {
+  var date = document.getElementById('dateInput').value;
+
+  // Reset to defaults
+  var defaults = { fb_wd: '1', yt_wd: '1' };
+  var ids = allFieldIds();
+  for (var i = 0; i < ids.length; i++) {
+    var el = document.getElementById(ids[i]);
+    if (!el) continue;
+    el.value = defaults[ids[i]] || '0';
+  }
+
+  // Load saved draft for this date
+  try {
+    var raw = localStorage.getItem('iic_d_' + date);
+    if (raw) {
+      var d = JSON.parse(raw);
+      for (var key in d) {
+        var el2 = document.getElementById(key);
+        if (el2) el2.value = d[key];
+      }
+      return;
+    }
+  } catch(e) {}
+
+  // No draft — carry over running totals from last saved
+  try {
+    var lt = localStorage.getItem('iic_lt');
+    if (lt) {
+      var t = JSON.parse(lt);
+      if (t.fb_lk) document.getElementById('fb_lk').value = t.fb_lk;
+      if (t.fb_fw) document.getElementById('fb_fw').value = t.fb_fw;
+      if (t.yt_st) document.getElementById('yt_st').value = t.yt_st;
+      if (t.yt_va) document.getElementById('yt_va').value = t.yt_va;
+    }
+  } catch(e) {}
+}
+
+function saveLastTotals() {
+  var t = {
+    fb_lk: document.getElementById('fb_lk').value,
+    fb_fw: document.getElementById('fb_fw').value,
+    yt_st: document.getElementById('yt_st').value,
+    yt_va: document.getElementById('yt_va').value
+  };
+  try { localStorage.setItem('iic_lt', JSON.stringify(t)); } catch(e) {}
+}
+
+// ============================================================
+// SETTINGS
+// ============================================================
+function openSettings(fromLogin) {
+  document.getElementById('settUrl').value  = st.scriptUrl;
+  document.getElementById('settName').value = st.companyName;
+  updateSettLogoThumb(st.logoB64);
+  st.pendingLogo = '';
+
+  // Only show branding if editor (not from login screen, not viewer)
+  var branding = document.getElementById('settBranding');
+  if (fromLogin || st.role !== 'editor') {
+    branding.style.display = 'none';
+  } else {
+    branding.style.display = 'block';
+  }
+
+  document.getElementById('settingsOverlay').classList.add('show');
+}
+
+function closeSettings() {
+  document.getElementById('settingsOverlay').classList.remove('show');
+}
+
+function onLogoFile(e) {
+  var file = e.target.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    st.pendingLogo = ev.target.result;
+    updateSettLogoThumb(st.pendingLogo);
+  };
+  reader.readAsDataURL(file);
+}
+
+function updateSettLogoThumb(b64) {
+  var el = document.getElementById('settLogoThumb');
+  if (b64) {
+    el.innerHTML = '<img src="' + b64 + '" alt="logo">';
+  } else {
+    el.innerHTML = '<div class="ld"></div>';
+  }
+}
+
+function saveSettings() {
+  st.scriptUrl = document.getElementById('settUrl').value.trim();
+
+  if (st.role === 'editor') {
+    st.companyName = document.getElementById('settName').value.trim() || st.companyName;
+    if (st.pendingLogo) st.logoB64 = st.pendingLogo;
+  }
+
+  // Save locally
+  try {
+    localStorage.setItem('iic_settings', JSON.stringify({
+      companyName: st.companyName,
+      logoB64: st.logoB64,
+      scriptUrl: st.scriptUrl
+    }));
+  } catch(e) {}
+
+  applyBranding();
+  closeSettings();
+  showStatus('Settings saved.', 'ok');
+
+  // Sync branding to sheet if editor + connected
+  if (st.role === 'editor' && st.scriptUrl) {
+    apiPost({
+      action: 'saveSettings',
+      role: st.role, pw: st.pw,
+      settings: { companyName: st.companyName, logoB64: st.logoB64 }
+    }, function() {});
+  }
+
+  if (st.scriptUrl && st.role) fetchMonthData();
+}
+
+function applyBranding() {
+  var name = st.companyName || 'Daily Report Dashboard';
+
+  // Login page
+  document.getElementById('loginTitle').textContent = name;
+  var ll = document.getElementById('loginLogo');
+  if (st.logoB64) {
+    ll.innerHTML = '<img src="' + st.logoB64 + '" alt="logo">';
+  } else {
+    ll.innerHTML = '<div class="logo-default"></div>';
+  }
+
+  // Main page
+  document.getElementById('brandName').textContent = name;
+  var bi = document.getElementById('brandIcon');
+  if (st.logoB64) {
+    bi.innerHTML = '<img src="' + st.logoB64 + '" alt="logo">';
+  } else {
+    bi.innerHTML = '<div class="bi-default"></div>';
+  }
+}
+
+// ============================================================
+// STATUS BAR
+// ============================================================
+function showStatus(msg, type) {
+  var el = document.getElementById('statusBar');
+  el.textContent = msg;
+  el.className = 'status-bar show ' + type;
+}
+function hideStatus() {
+  document.getElementById('statusBar').className = 'status-bar';
+}
+
+// ============================================================
+// MONTH TOTALS
+// ============================================================
+function getMonthTotal(platform, key) {
+  var d = st.monthData[platform];
+  if (!d || typeof d[key] !== 'number') return 0;
+  return d[key];
+}
+
+async function fetchMonthData() {
+  if (!st.scriptUrl) return;
+  var date = document.getElementById('dateInput').value;
+  document.getElementById('syncVal').textContent = 'Syncing...';
+
+  for (var plat of ['fb', 'yt']) {
+    try {
+      var params = new URLSearchParams({
+        action: 'getMonthTotals',
+        platform: plat,
+        date: date,
+        role: st.role || 'viewer',
+        password: st.pw
+      });
+      var res = await fetch(st.scriptUrl + '?' + params.toString());
+      var data = await res.json();
+      if (data.success) {
+        st.monthData[plat] = data.totals;
+      }
+    } catch(e) {
+      console.warn('fetchMonthData error', plat, e);
+    }
+  }
+  document.getElementById('syncVal').textContent = 'Synced ✓';
+}
+
+// ============================================================
+// SAVE ENTRY
+// ============================================================
+async function saveEntry() {
+  if (st.role !== 'editor') return;
+  saveLastTotals();
+  saveDraft();
+
+  if (!st.scriptUrl) {
+    showStatus('No Google Sheet connected — data saved locally. Connect in ⚙ Settings.', 'info');
+    generatePreview();
+    return;
+  }
+
+  var btn = document.getElementById('saveBtn');
+  btn.innerHTML = '<span class="spin"></span>Saving...';
+  btn.disabled = true;
+
+  var platform = st.platform;
+  var row = platform === 'fb' ? getFbRow() : getYtRow();
+
+  try {
+    var res = await fetch(st.scriptUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: 'save', platform: platform, row: row, role: st.role, password: st.pw })
+    });
+    var data = await res.json();
+    if (data.success) {
+      showStatus('Saved to Google Sheet ✓  —  This Month totals updated automatically.', 'ok');
+      await fetchMonthData();
+    } else {
+      showStatus('Save failed: ' + (data.error || 'unknown'), 'err');
+    }
+  } catch(e) {
+    showStatus('Could not reach Google Sheet. Data saved locally.', 'info');
+  }
+
+  btn.innerHTML = '💾 Save & Generate';
+  btn.disabled = false;
+  generatePreview();
+}
+
+function getFbRow() {
+  var date = document.getElementById('dateInput').value;
+  return [
+    date,
+    num('fb_nv'), num('fb_co'), num('fb_sn'), num('fb_so'),
+    num('fb_cp'), num('fb_th'), num('fb_lv'),
+    val('fb_lk'), val('fb_fw'), num('fb_wd'), ''
+  ];
+}
+
+function getYtRow() {
+  var date = document.getElementById('dateInput').value;
+  return [
+    date,
+    num('yt_nv'), num('yt_co'), num('yt_sn'), num('yt_so'),
+    num('yt_cp'), num('yt_th'), num('yt_lv'),
+    val('yt_st'), num('yt_sg'), numF('yt_vt'), num('yt_wd'), val('yt_pa')
+  ];
+}
+
+function num(id) { return parseInt(document.getElementById(id).value || '0', 10) || 0; }
+function numF(id) { return parseFloat((document.getElementById(id).value || '0').replace(/,/g,'')) || 0; }
+function val(id) { return document.getElementById(id).value || ''; }
+
+// ============================================================
+// REPORT CARD
+// ============================================================
+function generatePreview() {
+  var date = document.getElementById('dateInput').value;
+  var html = st.platform === 'fb' ? buildFbCard(date) : buildYtCard(date);
+  document.getElementById('reportCard').innerHTML = html;
+  document.getElementById('prevTitle').textContent =
+    (st.platform === 'fb' ? 'Facebook' : 'YouTube') + ' Report — ' + isoToDisplay(date);
+  document.getElementById('previewOverlay').style.display = 'flex';
+}
+
+function closePreview() {
+  document.getElementById('previewOverlay').style.display = 'none';
+}
+
+function logoTag() {
+  if (st.logoB64) return '<img src="' + st.logoB64 + '" alt="logo">';
+  return '<div class="rc-logo-def"></div><div class="rc-logo-text">' + esc(st.companyName) + '</div>';
+}
+
+function esc(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function dash(v) {
+  v = parseInt(v, 10) || 0;
+  return v === 0 ? '-' : (v < 10 ? '0' + v : '' + v);
+}
+
+function fmtN(v) {
+  v = parseFloat(String(v).replace(/,/g,'')) || 0;
+  if (v >= 1000000) return (v/1000000).toFixed(1).replace(/\.0$/,'') + 'M';
+  if (v >= 1000) return v.toLocaleString('en-IN');
+  return String(v);
+}
+
+function buildFbCard(date) {
+  var today = {
+    nv: num('fb_nv'), co: num('fb_co'), sn: num('fb_sn'), so: num('fb_so'),
+    cp: num('fb_cp'), th: num('fb_th'), lv: num('fb_lv')
+  };
+  var month = {
+    nv: getMonthTotal('fb','NewVideo') || today.nv,
+    co: getMonthTotal('fb','ClipFromOld') || today.co,
+    sn: getMonthTotal('fb','ShortNew') || today.sn,
+    so: getMonthTotal('fb','ShortFromOld') || today.so,
+    cp: getMonthTotal('fb','CommunityPost') || today.cp,
+    th: getMonthTotal('fb','Thumbnail') || today.th,
+    lv: getMonthTotal('fb','Live') || today.lv
+  };
+  var likes = val('fb_lk') || '-';
+  var followers = val('fb_fw') || '-';
+  var dars = num('fb_wd');
+
+  return '<div class="rc-head fb">' +
+    '<div class="rc-logo-box">' + logoTag() + '</div>' +
+    '<div class="rc-title-area"><div class="rc-main-title">Daily Facebook</div></div>' +
+    '</div>' +
+    '<div class="rc-date-band"><div class="rc-date-pill fb">Date: ' + isoToDisplay(date) + '</div></div>' +
+    '<table class="rc-table">' +
+    '<tr><th>Sr.N</th><th>Activities</th><th>Today</th><th>This Month</th><th></th></tr>' +
+    '<tr><td class="td-sr">01</td><td>Publish New Video</td><td class="td-num">' + dash(today.nv) + '</td><td class="td-num">' + dash(month.nv) + '</td><td class="td-side" rowspan="2">' + dars + '<br>Weekly<br>Dars</td></tr>' +
+    '<tr><td class="td-sr">02</td><td>Publish Clip From Old Video</td><td class="td-num">' + dash(today.co) + '</td><td class="td-num">' + dash(month.co) + '</td></tr>' +
+    '<tr><td class="td-sr">03</td><td>Short New video</td><td class="td-num">' + dash(today.sn) + '</td><td class="td-num">' + dash(month.sn) + '</td><td rowspan="5"></td></tr>' +
+    '<tr><td class="td-sr">04</td><td>Short from old video clip</td><td class="td-num">' + dash(today.so) + '</td><td class="td-num">' + dash(month.so) + '</td></tr>' +
+    '<tr><td class="td-sr">05</td><td>Community post</td><td class="td-num">' + dash(today.cp) + '</td><td class="td-num">' + dash(month.cp) + '</td></tr>' +
+    '<tr><td class="td-sr">06</td><td>Thumbnail</td><td class="td-num">' + dash(today.th) + '</td><td class="td-num">' + dash(month.th) + '</td></tr>' +
+    '<tr><td class="td-sr">07</td><td>Live</td><td class="td-num">' + dash(today.lv) + '</td><td class="td-num">' + dash(month.lv) + '</td></tr>' +
+    '<tr><td class="td-sr">08</td><td>Likes</td><td class="td-num">-</td><td class="td-num">-</td><td class="td-side">Total<br>Current</td></tr>' +
+    '<tr><td class="td-sr">09</td><td>Followers</td><td class="td-num">-</td><td class="td-num">-</td><td class="td-side">' + likes + '</td></tr>' +
+    '<tr><td></td><td></td><td></td><td></td><td class="td-side">' + followers + '</td></tr>' +
+    '</table>' +
+    '<div class="rc-foot">' + esc(st.companyName) + ' · Generated ' + isoToDisplay(date) + '</div>';
+}
+
+function buildYtCard(date) {
+  var today = {
+    nv: num('yt_nv'), co: num('yt_co'), sn: num('yt_sn'), so: num('yt_so'),
+    cp: num('yt_cp'), th: num('yt_th'), lv: num('yt_lv'),
+    sg: num('yt_sg'), vt: numF('yt_vt')
+  };
+  var month = {
+    nv: getMonthTotal('yt','NewVideo') || today.nv,
+    co: getMonthTotal('yt','ClipFromOld') || today.co,
+    sn: getMonthTotal('yt','ShortNew') || today.sn,
+    so: getMonthTotal('yt','ShortFromOld') || today.so,
+    cp: getMonthTotal('yt','CommunityPost') || today.cp,
+    th: getMonthTotal('yt','Thumbnail') || today.th,
+    lv: getMonthTotal('yt','Live') || today.lv,
+    sg: getMonthTotal('yt','SubscriberGain') || today.sg,
+    vt: getMonthTotal('yt','Views') || today.vt
+  };
+  var totalSubs  = val('yt_st') || '-';
+  var totalViews = val('yt_va') || '-';
+  var dars   = num('yt_wd');
+  var pending = num('yt_pa');
+
+  return '<div class="rc-head yt">' +
+    '<div class="rc-logo-box">' + logoTag() + '</div>' +
+    '<div class="rc-title-area"><div class="rc-main-title">Daily YouTube</div></div>' +
+    '</div>' +
+    '<div class="rc-date-band"><div class="rc-date-pill yt">Date: ' + isoToDisplay(date) + '</div></div>' +
+    '<table class="rc-table yt">' +
+    '<tr><th>Sr.N</th><th>Activities</th><th>Today</th><th>This Month</th><th></th></tr>' +
+    '<tr><td class="td-sr">01</td><td>Publish New Video</td><td class="td-num">' + dash(today.nv) + '</td><td class="td-num">' + dash(month.nv) + '</td><td class="td-side" rowspan="2">' + dars + '<br>Weekly<br>Dars</td></tr>' +
+    '<tr><td class="td-sr">02</td><td>Publish Clip From Old Video</td><td class="td-num">' + dash(today.co) + '</td><td class="td-num">' + dash(month.co) + '</td></tr>' +
+    '<tr><td class="td-sr">03</td><td>Short New video</td><td class="td-num">' + dash(today.sn) + '</td><td class="td-num">' + dash(month.sn) + '</td><td class="td-side hi" rowspan="4">Pending<br>For<br>Approval<br>(' + pending + ')</td></tr>' +
+    '<tr><td class="td-sr">04</td><td>Short from old video Clip</td><td class="td-num">' + dash(today.so) + '</td><td class="td-num">' + dash(month.so) + '</td></tr>' +
+    '<tr><td class="td-sr">05</td><td>Community post</td><td class="td-num">' + dash(today.cp) + '</td><td class="td-num">' + dash(month.cp) + '</td></tr>' +
+    '<tr><td class="td-sr">06</td><td>Thumbnail</td><td class="td-num">' + dash(today.th) + '</td><td class="td-num">' + dash(month.th) + '</td></tr>' +
+    '<tr><td class="td-sr">07</td><td>Live</td><td class="td-num">' + dash(today.lv) + '</td><td class="td-num">' + dash(month.lv) + '</td><td class="td-side" rowspan="3">Total<br>Current</td></tr>' +
+    '<tr><td class="td-sr">08</td><td>Subscriber</td><td class="td-num">' + dash(today.sg) + '</td><td class="td-num">' + dash(month.sg) + '</td></tr>' +
+    '<tr><td class="td-sr">09</td><td>Views</td><td class="td-num">' + fmtN(today.vt) + '</td><td class="td-num">' + fmtN(month.vt) + '</td></tr>' +
+    '<tr><td class="td-sr"></td><td style="font-weight:800">Subscribers / Views (Total)</td><td class="td-num" colspan="2">' + totalSubs + ' / ' + totalViews + '</td><td></td></tr>' +
+    '</table>' +
+    '<div class="rc-foot">' + esc(st.companyName) + ' · Generated ' + isoToDisplay(date) + '</div>';
+}
+
+// ============================================================
+// DOWNLOAD
+// ============================================================
+function downloadCard() {
+  var card = document.getElementById('reportCard');
+  if (!card || !card.innerHTML.trim()) {
+    alert('No report to download. Click Preview or Save & Generate first.');
+    return;
+  }
+  if (typeof html2canvas === 'undefined') {
+    alert('Image library not loaded. Make sure you are online when opening the page.');
+    return;
+  }
+  var date = document.getElementById('dateInput').value;
+  var btn = document.querySelector('.prev-btn.dl');
+  btn.textContent = 'Generating...';
+  btn.disabled = true;
+
+  html2canvas(card, {
+    scale: 2.5,
+    backgroundColor: '#ffffff',
+    logging: false,
+    useCORS: true,
+    allowTaint: true
+  }).then(function(canvas) {
+    var link = document.createElement('a');
+    link.download = st.platform + '_report_' + date + '.png';
+    link.href = canvas.toDataURL('image/png');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    btn.textContent = '⬇ Download Image';
+    btn.disabled = false;
+  }).catch(function(e) {
+    console.error('html2canvas error', e);
+    btn.textContent = '⬇ Download Image';
+    btn.disabled = false;
+    alert('Download failed. Try again or take a screenshot.');
+  });
+}
+
+// ============================================================
+// HISTORY VIEW
+// ============================================================
+function changeMonth(d) {
+  st.histMonth += d;
+  if (st.histMonth > 12) { st.histMonth = 1;  st.histYear++; }
+  if (st.histMonth < 1)  { st.histMonth = 12; st.histYear--; }
+  if (st.scriptUrl) fetchAndRenderHistory();
+  else renderHistory();
+}
+
+async function fetchAndRenderHistory() {
+  if (!st.scriptUrl) { renderHistory(); return; }
+  document.getElementById('histList').innerHTML =
+    '<div class="empty-msg">Loading...</div>';
+
+  try {
+    var params = new URLSearchParams({
+      action: 'getMonthData',
+      platform: st.platform,
+      month: st.histMonth,
+      year: st.histYear,
+      role: st.role || 'viewer',
+      password: st.pw
+    });
+    var res = await fetch(st.scriptUrl + '?' + params.toString());
+    var data = await res.json();
+    if (data.success) {
+      st.historyRows = data.rows || [];
+    }
+  } catch(e) {
+    st.historyRows = [];
+  }
+  renderHistory();
+}
+
+function renderHistory() {
+  document.getElementById('monthLabel').textContent =
+    MONTHS[st.histMonth - 1] + ' ' + st.histYear;
+
+  var rows = (st.historyRows || []).filter(function(r) {
+    var d = new Date(r.Date + 'T00:00:00');
+    return d.getMonth() + 1 === st.histMonth && d.getFullYear() === st.histYear;
+  });
+
+  renderSummary(rows);
+  renderHistList(rows);
+}
+
+function renderSummary(rows) {
+  var el = document.getElementById('summaryGrid');
+  if (!rows.length) { el.innerHTML = ''; return; }
+
+  var totVid = 0, totShort = 0, totPost = 0, totThumb = 0;
+  rows.forEach(function(r) {
+    totVid   += (r.NewVideo||0) + (r.ClipFromOld||0);
+    totShort += (r.ShortNew||0) + (r.ShortFromOld||0);
+    totPost  += (r.CommunityPost||0);
+    totThumb += (r.Thumbnail||0);
+  });
+
+  var extra = '';
+  if (st.platform === 'yt') {
+    var totSubs = 0, totViews = 0;
+    rows.forEach(function(r) { totSubs += (r.SubscriberGain||0); totViews += (r.Views||0); });
+    extra =
+      '<div class="sum-tile"><div class="sum-tile-label">New Subscribers</div><div class="sum-tile-val">' + totSubs + '</div></div>' +
+      '<div class="sum-tile"><div class="sum-tile-label">Total Views</div><div class="sum-tile-val">' + fmtN(totViews) + '</div></div>';
+  } else {
+    extra =
+      '<div class="sum-tile"><div class="sum-tile-label">Community Posts</div><div class="sum-tile-val">' + totPost + '</div></div>' +
+      '<div class="sum-tile"><div class="sum-tile-label">Thumbnails</div><div class="sum-tile-val">' + totThumb + '</div></div>';
+  }
+
+  el.innerHTML =
+    '<div class="sum-tile"><div class="sum-tile-label">Videos Published</div><div class="sum-tile-val">' + totVid + '</div></div>' +
+    '<div class="sum-tile"><div class="sum-tile-label">Shorts Published</div><div class="sum-tile-val">' + totShort + '</div></div>' +
+    extra +
+    '<div class="sum-tile wide"><div class="sum-tile-label">Days Logged This Month</div><div class="sum-tile-val">' + rows.length + '</div></div>';
+}
+
+function renderHistList(rows) {
+  var el = document.getElementById('histList');
+  if (!rows.length) {
+    var msg = !st.scriptUrl
+      ? 'Connect Google Sheet in ⚙ Settings to see history here.'
+      : 'No entries for ' + MONTHS[st.histMonth - 1] + ' ' + st.histYear + '.';
+    el.innerHTML = '<div class="empty-msg">' + msg + '<br><br>Use "Today\'s Entry" tab to add data for any date.</div>';
+    return;
+  }
+
+  var sorted = rows.slice().sort(function(a, b) {
+    return new Date(b.Date) - new Date(a.Date);
+  });
+
+  el.innerHTML = sorted.map(function(r) {
+    var vid = (r.NewVideo||0) + (r.ClipFromOld||0);
+    var sht = (r.ShortNew||0) + (r.ShortFromOld||0);
+    var meta = st.platform === 'yt'
+      ? vid + ' videos · ' + sht + ' shorts · ' + (r.SubscriberGain||0) + ' new subs'
+      : vid + ' videos · ' + sht + ' shorts · ' + (r.CommunityPost||0) + ' posts';
+    var rj = JSON.stringify(r).replace(/"/g,'&quot;');
+    return '<div class="hist-row" onclick="loadHistoryRow(' + rj + ')">' +
+      '<div><div class="hist-date">' + isoToDisplay(r.Date) + '</div>' +
+      '<div class="hist-meta">' + meta + '</div></div>' +
+      '<div class="hist-arrow">›</div></div>';
+  }).join('');
+}
+
+function loadHistoryRow(r) {
+  document.getElementById('dateInput').value = r.Date;
+
+  if (st.platform === 'fb') {
+    document.getElementById('fb_nv').value = r.NewVideo || 0;
+    document.getElementById('fb_co').value = r.ClipFromOld || 0;
+    document.getElementById('fb_sn').value = r.ShortNew || 0;
+    document.getElementById('fb_so').value = r.ShortFromOld || 0;
+    document.getElementById('fb_cp').value = r.CommunityPost || 0;
+    document.getElementById('fb_th').value = r.Thumbnail || 0;
+    document.getElementById('fb_lv').value = r.Live || 0;
+    document.getElementById('fb_lk').value = r.Likes || '';
+    document.getElementById('fb_fw').value = r.Followers || '';
+    document.getElementById('fb_wd').value = r.WeeklyDars || 1;
+  } else {
+    document.getElementById('yt_nv').value = r.NewVideo || 0;
+    document.getElementById('yt_co').value = r.ClipFromOld || 0;
+    document.getElementById('yt_sn').value = r.ShortNew || 0;
+    document.getElementById('yt_so').value = r.ShortFromOld || 0;
+    document.getElementById('yt_cp').value = r.CommunityPost || 0;
+    document.getElementById('yt_th').value = r.Thumbnail || 0;
+    document.getElementById('yt_lv').value = r.Live || 0;
+    document.getElementById('yt_sg').value = r.SubscriberGain || 0;
+    document.getElementById('yt_st').value = r.SubscribersTotal || '';
+    document.getElementById('yt_vt').value = r.Views || 0;
+    document.getElementById('yt_va').value = '';
+    document.getElementById('yt_wd').value = r.WeeklyDars || 1;
+    document.getElementById('yt_pa').value = r.PendingApproval || 0;
+  }
+
+  saveDraft();
+  switchView('entry');
+  showStatus('Loaded ' + isoToDisplay(r.Date) + ' — edit and Save & Generate to update.', 'info');
+}
+
+// ============================================================
+// API HELPER (callback-based, no async)
+// ============================================================
+function apiPost(payload, cb) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', st.scriptUrl, true);
+  xhr.setRequestHeader('Content-Type', 'text/plain');
+  xhr.onload = function() {
+    try {
+      var d = JSON.parse(xhr.responseText);
+      cb(d, null);
+    } catch(e) { cb(null, e); }
+  };
+  xhr.onerror = function() { cb(null, new Error('Network error')); };
+  xhr.send(JSON.stringify(payload));
+}
+</script>
+</body>
+</html>
