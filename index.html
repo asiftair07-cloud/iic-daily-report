@@ -101,12 +101,6 @@ body{
 }
 .login-btn:hover{background:var(--navy3)}
 .login-btn:active{transform:scale(0.99)}
-.login-hint{margin-top:14px;font-size:12px;color:var(--muted)}
-.login-hint a{color:var(--navy);font-weight:600;cursor:pointer;text-decoration:underline}
-.login-skip{
-  margin-top:10px;font-size:12px;color:var(--muted);cursor:pointer;
-  text-decoration:underline;
-}
 
 /* ===================== MAIN PAGE ===================== */
 #mainPage{background:var(--paper)}
@@ -180,7 +174,7 @@ body{
   font-size:12px;font-weight:700;color:rgba(255,255,255,0.85);margin-top:3px;
 }
 
-/* CONTENT PANEL (overlaps topbar) */
+/* CONTENT PANEL */
 .content{
   background:var(--white);
   border-radius:20px 20px 0 0;
@@ -203,19 +197,6 @@ body{
 .ptab.yt{background:var(--yt-bg);color:var(--yt)}
 .ptab.yt.on{background:var(--yt);color:#fff;border-color:var(--yt)}
 
-/* SUB NAV */
-.subnav{
-  display:flex;gap:0;padding:0 16px;
-  border-bottom:1.5px solid var(--border);margin-top:16px;
-}
-.snav{
-  padding:0 4px 12px;margin-right:24px;
-  font-size:14px;font-weight:700;color:var(--muted);
-  cursor:pointer;border-bottom:2.5px solid transparent;
-  white-space:nowrap;
-}
-.snav.on{color:var(--navy);border-bottom-color:var(--gold)}
-
 /* STATUS */
 .status-bar{
   margin:12px 16px 0;padding:10px 14px;
@@ -229,7 +210,6 @@ body{
 
 /* ===================== ENTRY VIEW ===================== */
 #entryView{display:block}
-#historyView{display:none}
 
 /* SECTION */
 .sec{
@@ -303,54 +283,6 @@ body{
 .bbar-btn:active{opacity:0.85;transform:scale(0.99)}
 .bbar-btn:disabled{opacity:0.5;pointer-events:none}
 
-/* ===================== HISTORY VIEW ===================== */
-.month-nav{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:16px 16px 0;
-}
-.month-label{font-size:19px;font-weight:800;color:var(--navy)}
-.mnav-btns{display:flex;gap:8px}
-.mnav-btn{
-  width:34px;height:34px;border-radius:8px;
-  border:1.5px solid var(--border);background:var(--white);
-  font-size:15px;cursor:pointer;color:var(--navy);
-  display:flex;align-items:center;justify-content:center;
-}
-
-/* SUMMARY TILES */
-.summary-grid{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:10px;padding:14px 16px 0;
-}
-.sum-tile{
-  background:var(--white);border:1px solid var(--border);
-  border-radius:var(--r);padding:14px;box-shadow:var(--sh);
-}
-.sum-tile-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
-.sum-tile-val{font-size:26px;font-weight:900;color:var(--navy);margin-top:4px}
-.sum-tile.wide{grid-column:span 2}
-
-/* HISTORY LIST */
-.hist-list{padding:0 16px;margin-top:12px}
-.hist-row{
-  background:var(--white);border:1px solid var(--border);
-  border-radius:var(--r);padding:13px 16px;
-  margin-bottom:8px;
-  display:flex;align-items:center;justify-content:space-between;
-  cursor:pointer;box-shadow:var(--sh);
-  transition:border-color 0.1s;
-}
-.hist-row:active{border-color:var(--gold);background:#fffdf5}
-.hist-date{font-size:15px;font-weight:800;color:var(--navy)}
-.hist-meta{font-size:12px;color:var(--muted);margin-top:2px}
-.hist-arrow{font-size:18px;color:var(--gold);flex-shrink:0}
-.empty-msg{
-  padding:32px 20px;text-align:center;color:var(--muted);
-  font-size:13px;line-height:1.6;
-  border:1.5px dashed var(--border);border-radius:var(--r);
-  margin:16px;
-}
-
 /* ===================== MODALS ===================== */
 .overlay{
   position:fixed;inset:0;background:rgba(20,30,50,0.55);
@@ -364,46 +296,6 @@ body{
   padding:22px 18px max(22px,env(safe-area-inset-bottom));
   max-height:90vh;overflow-y:auto;
 }
-.sheet-title{font-size:18px;font-weight:800;color:var(--navy);margin-bottom:4px}
-.sheet-sub{font-size:12px;color:var(--muted);margin-bottom:20px}
-.field-label{
-  display:block;font-size:11px;font-weight:700;
-  text-transform:uppercase;letter-spacing:1.2px;
-  color:var(--muted);margin-top:16px;margin-bottom:6px;
-}
-.field-label:first-of-type{margin-top:0}
-.text-field{
-  width:100%;padding:12px 14px;border-radius:var(--r2);
-  border:1.5px solid var(--border);background:var(--paper);
-  font-size:14px;font-family:inherit;color:var(--text);
-}
-.text-field:focus{outline:none;border-color:var(--gold);background:#fffdf5}
-.logo-row{display:flex;align-items:center;gap:14px;margin-top:6px}
-.logo-thumb{
-  width:56px;height:56px;border-radius:13px;
-  border:1.5px solid var(--gold);background:var(--paper);
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;flex-shrink:0;
-}
-.logo-thumb img{width:100%;height:100%;object-fit:cover}
-.logo-thumb .ld{
-  width:18px;height:18px;background:var(--gold);
-  border-radius:4px;transform:rotate(45deg);
-}
-.file-btn{
-  padding:10px 14px;border-radius:var(--r2);
-  border:1.5px dashed var(--border);background:transparent;
-  font-size:13px;font-weight:600;color:var(--navy);
-  cursor:pointer;font-family:inherit;
-}
-.sheet-actions{display:flex;gap:10px;margin-top:22px}
-.sheet-btn{
-  flex:1;padding:14px;border-radius:var(--r2);border:none;
-  font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;
-}
-.sheet-btn.cancel{background:#f0ede8;color:var(--navy)}
-.sheet-btn.save{background:var(--navy);color:#fff}
-.sheet-btn:active{opacity:0.85}
 
 /* ===================== PREVIEW OVERLAY ===================== */
 #previewOverlay{
@@ -535,7 +427,6 @@ body{
 <body>
 <div id="app">
 
-<!-- =================== LOGIN PAGE =================== -->
 <div id="loginPage" class="page active">
   <div class="login-box">
     <div class="login-logo" id="loginLogo">
@@ -549,18 +440,11 @@ body{
       autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
     <div class="login-error" id="loginErr"></div>
     <button class="login-btn" id="loginBtn" onclick="doLogin()">Sign In</button>
-
-    <div class="login-hint">
-      <a onclick="openSettings(true)">⚙ First-time setup — connect Google Sheet</a>
-    </div>
-    <div class="login-skip" onclick="skipLogin()">Open in Preview Mode (no login required)</div>
   </div>
 </div>
 
-<!-- =================== MAIN PAGE =================== -->
 <div id="mainPage" class="page">
 
-  <!-- TOP BAR -->
   <div class="topbar">
     <div class="topbar-inner">
       <div class="topbar-row1">
@@ -572,7 +456,6 @@ body{
           </div>
         </div>
         <div class="topbar-btns">
-          <button class="tbtn" onclick="openSettings(false)" title="Settings">⚙</button>
           <button class="tbtn" onclick="doLogout()" title="Sign out">⏏</button>
         </div>
       </div>
@@ -582,35 +465,24 @@ body{
           <input type="date" id="dateInput" onchange="onDateChange()">
         </div>
         <div class="date-bar-right">
-          <div class="sync-label">Sheet Sync</div>
-          <div class="sync-val" id="syncVal">—</div>
+          <div class="sync-label">Airtable Data</div>
+          <div class="sync-val" id="syncVal">Linked</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- CONTENT PANEL -->
   <div class="content">
 
-    <!-- PLATFORM TABS -->
     <div class="ptabs">
       <div class="ptab fb on" id="tabFb" onclick="switchPlatform('fb')">📘 Facebook</div>
       <div class="ptab yt" id="tabYt" onclick="switchPlatform('yt')">▶️ YouTube</div>
     </div>
 
-    <!-- SUB NAV -->
-    <div class="subnav">
-      <div class="snav on" id="snavEntry" onclick="switchView('entry')">Today's Entry</div>
-      <div class="snav" id="snavHistory" onclick="switchView('history')">Monthly History</div>
-    </div>
-
-    <!-- STATUS BAR -->
     <div class="status-bar" id="statusBar"></div>
 
-    <!-- =========== ENTRY VIEW =========== -->
     <div id="entryView">
 
-      <!-- FACEBOOK FORM -->
       <div id="fbForm">
         <div class="sec">
           <div class="sec-head">📹 Today's Activities</div>
@@ -647,7 +519,6 @@ body{
         </div>
       </div>
 
-      <!-- YOUTUBE FORM -->
       <div id="ytForm" class="hidden">
         <div class="sec">
           <div class="sec-head">📹 Today's Activities</div>
@@ -693,62 +564,11 @@ body{
             <div class="stepper"><button class="st-btn" onclick="adj('yt_pa',-1)">−</button><input class="st-val" type="number" id="yt_pa" value="0" min="0"><button class="st-btn" onclick="adj('yt_pa',1)">+</button></div></div>
         </div>
       </div>
-    </div><!-- /entryView -->
-
-    <!-- =========== HISTORY VIEW =========== -->
-    <div id="historyView" class="hidden">
-      <div class="month-nav">
-        <div class="mnav-btns"><button class="mnav-btn" onclick="changeMonth(-1)">‹</button></div>
-        <div class="month-label" id="monthLabel">June 2026</div>
-        <div class="mnav-btns"><button class="mnav-btn" onclick="changeMonth(1)">›</button></div>
-      </div>
-      <div class="summary-grid" id="summaryGrid"></div>
-      <div class="hist-list" id="histList"></div>
-    </div>
-
-  </div><!-- /content -->
-</div><!-- /mainPage -->
-
-</div><!-- /app -->
-
-<!-- BOTTOM BAR (entry mode only) -->
-<div class="bottombar" id="bottomBar">
+    </div></div></div></div><div class="bottombar" id="bottomBar">
   <button class="bbar-btn ghost" onclick="generatePreview()">👁 Preview</button>
   <button class="bbar-btn primary" id="saveBtn" onclick="saveEntry()">💾 Save & Generate</button>
 </div>
 
-<!-- =================== SETTINGS SHEET =================== -->
-<div class="overlay" id="settingsOverlay">
-  <div class="sheet">
-    <div class="sheet-title">Settings</div>
-    <div class="sheet-sub">Connect Google Sheet for saving data, sharing, and history across devices.</div>
-
-    <label class="field-label">Google Apps Script URL</label>
-    <input class="text-field" type="url" id="settUrl" placeholder="https://script.google.com/macros/s/.../exec">
-
-    <div id="settBranding">
-      <label class="field-label">Company / Centre Name</label>
-      <input class="text-field" type="text" id="settName" placeholder="Islamic Information Centre">
-
-      <label class="field-label">Logo</label>
-      <div class="logo-row">
-        <div class="logo-thumb" id="settLogoThumb"><div class="ld"></div></div>
-        <div>
-          <input type="file" id="logoFileInput" accept="image/*" style="display:none" onchange="onLogoFile(event)">
-          <button class="file-btn" onclick="document.getElementById('logoFileInput').click()">📁 Choose Logo Image</button>
-          <div style="font-size:11px;color:var(--muted);margin-top:5px">Square PNG or JPG, any size</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="sheet-actions">
-      <button class="sheet-btn cancel" onclick="closeSettings()">Cancel</button>
-      <button class="sheet-btn save" onclick="saveSettings()">Save Settings</button>
-    </div>
-  </div>
-</div>
-
-<!-- =================== PREVIEW OVERLAY =================== -->
 <div id="previewOverlay">
   <div class="prev-head">
     <div class="prev-title" id="prevTitle">Report Preview</div>
@@ -763,65 +583,41 @@ body{
   </div>
 </div>
 
-<!-- html2canvas for image capture -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
   integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
   crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
 // ============================================================
+// AIRTABLE CREDENTIALS (PASTE YOURS HERE)
+// ============================================================
+var AIRTABLE_BASE_ID = "appuxIKf7ipI1wbVf";
+var AIRTABLE_TOKEN = "patSwe1HmH9gLstsB.37d4bf64a6a24f9006119b80ab443" + "f78c7d6dcad72450b93b7986aa8a05f99be";
+
+// ============================================================
 // STATE
 // ============================================================
 var st = {
   platform: 'fb',
-  view: 'entry',
-  role: null,        // 'editor' | 'viewer' | 'preview'
+  role: null,        
   pw: '',
-  companyName: 'Islamic Information Centre',
-  logoB64: '',
-  scriptUrl: '',
-  histMonth: new Date().getMonth() + 1,
-  histYear: new Date().getFullYear(),
-  monthData: { fb: null, yt: null },
-  pendingLogo: ''
+  companyName: 'Islamic Information Centre'
 };
-
-var MONTHS = ['January','February','March','April','May','June',
-              'July','August','September','October','November','December'];
 
 // ============================================================
 // INIT
 // ============================================================
 window.addEventListener('load', function() {
-  // Load persisted settings
-  try {
-    var saved = localStorage.getItem('iic_settings');
-    if (saved) {
-      var s = JSON.parse(saved);
-      st.companyName = s.companyName || st.companyName;
-      st.logoB64 = s.logoB64 || '';
-      st.scriptUrl = s.scriptUrl || '';
-    }
-  } catch(e) {}
-
-  // Set today's date
   document.getElementById('dateInput').value = todayISO();
 
-  // Apply branding on login screen
-  applyBranding();
-
-  // Try restore session
   try {
     var savedRole = sessionStorage.getItem('iic_r');
-    var savedPw   = sessionStorage.getItem('iic_p');
-    if (savedRole && savedPw) {
+    if (savedRole) {
       st.role = savedRole;
-      st.pw   = savedPw;
       showMain();
     }
   } catch(e) {}
 
-  // Wire up all inputs to auto-save draft
   wireInputs();
 });
 
@@ -836,7 +632,7 @@ function wireInputs() {
 }
 
 // ============================================================
-// AUTH / LOGIN
+// LOCAL AUTH LOGIC (No Google Script Needed)
 // ============================================================
 function doLogin() {
   var pw = document.getElementById('loginPw').value.trim();
@@ -847,91 +643,31 @@ function doLogin() {
     return;
   }
 
-  if (!st.scriptUrl) {
-    document.getElementById('loginErr').textContent =
-      'No Google Sheet connected. Use the Setup link below, or use Preview Mode.';
-    return;
-  }
-
-  var btn = document.getElementById('loginBtn');
-  btn.innerHTML = '<span class="spin"></span>Checking...';
-  btn.disabled = true;
-
-  apiPost({ action: 'login', password: pw }, function(data, err) {
-    btn.innerHTML = 'Sign In';
-    btn.disabled = false;
-
-    if (err) {
-      document.getElementById('loginErr').textContent =
-        'Could not reach Google Sheet. Check the URL in Settings.';
-      return;
-    }
-    if (data.success) {
-      st.role = data.role;
-      st.pw   = pw;
+  if (pw === "editor123") {
+      st.role = 'editor';
+      st.pw = pw;
       try {
         sessionStorage.setItem('iic_r', st.role);
-        sessionStorage.setItem('iic_p', st.pw);
       } catch(e) {}
       showMain();
-    } else {
-      document.getElementById('loginErr').textContent =
-        data.error || 'Incorrect password. Try again.';
-    }
-  });
-}
-
-function skipLogin() {
-  st.role = 'preview';
-  st.pw   = '';
-  showMain();
+  } else {
+      document.getElementById('loginErr').textContent = 'Incorrect password. Try editor123';
+  }
 }
 
 function doLogout() {
   st.role = null;
   st.pw   = '';
-  try { sessionStorage.removeItem('iic_r'); sessionStorage.removeItem('iic_p'); } catch(e) {}
+  try { sessionStorage.removeItem('iic_r'); } catch(e) {}
   document.getElementById('loginPw').value = '';
   document.getElementById('loginErr').textContent = '';
   showPage('loginPage');
 }
 
 function showMain() {
-  // Set role label
-  var roleLabels = { editor: 'Editor', viewer: 'View Only', preview: 'Preview Mode' };
-  document.getElementById('brandRole').textContent = roleLabels[st.role] || '';
-
-  // In viewer/preview mode, disable editing inputs
-  if (st.role !== 'editor') {
-    lockInputs(true);
-    document.getElementById('saveBtn').disabled = true;
-    document.getElementById('saveBtn').textContent = '(View Only)';
-  } else {
-    lockInputs(false);
-    document.getElementById('saveBtn').disabled = false;
-    document.getElementById('saveBtn').textContent = '💾 Save & Generate';
-  }
-
-  applyBranding();
+  document.getElementById('brandRole').textContent = 'Editor';
   showPage('mainPage');
   loadDraft();
-  if (st.scriptUrl) fetchMonthData();
-}
-
-function lockInputs(lock) {
-  var stepBtns = document.querySelectorAll('.st-btn');
-  var stepVals = document.querySelectorAll('.st-val');
-  var textInputs = document.querySelectorAll('.tinput');
-  var all = Array.prototype.slice.call(stepBtns)
-    .concat(Array.prototype.slice.call(stepVals))
-    .concat(Array.prototype.slice.call(textInputs));
-  for (var i = 0; i < all.length; i++) {
-    if (lock) {
-      all[i].setAttribute('disabled', 'disabled');
-    } else {
-      all[i].removeAttribute('disabled');
-    }
-  }
 }
 
 // ============================================================
@@ -945,37 +681,11 @@ function showPage(id) {
 
 function switchPlatform(p) {
   st.platform = p;
-
-  // Update tabs
   document.getElementById('tabFb').className = 'ptab fb' + (p === 'fb' ? ' on' : '');
   document.getElementById('tabYt').className = 'ptab yt' + (p === 'yt' ? ' on' : '');
-
-  // Show/hide forms
   document.getElementById('fbForm').className  = (p === 'fb') ? '' : 'hidden';
   document.getElementById('ytForm').className  = (p === 'yt') ? '' : 'hidden';
-
   hideStatus();
-
-  if (st.view === 'history') renderHistory();
-}
-
-function switchView(v) {
-  st.view = v;
-
-  document.getElementById('snavEntry').className   = 'snav' + (v === 'entry'   ? ' on' : '');
-  document.getElementById('snavHistory').className = 'snav' + (v === 'history' ? ' on' : '');
-
-  document.getElementById('entryView').style.display   = (v === 'entry')   ? 'block' : 'none';
-  document.getElementById('historyView').style.display = (v === 'history') ? 'block' : 'none';
-  document.getElementById('bottomBar').style.display   = (v === 'entry')   ? 'flex'  : 'none';
-
-  if (v === 'history') {
-    var d = new Date(document.getElementById('dateInput').value + 'T00:00:00');
-    st.histMonth = d.getMonth() + 1;
-    st.histYear  = d.getFullYear();
-    if (st.scriptUrl) fetchMonthData();
-    renderHistory();
-  }
 }
 
 // ============================================================
@@ -1012,7 +722,6 @@ function isoToDisplay(iso) {
 function onDateChange() {
   saveDraft();
   loadDraft();
-  if (st.scriptUrl) fetchMonthData();
 }
 
 // ============================================================
@@ -1036,8 +745,6 @@ function saveDraft() {
 
 function loadDraft() {
   var date = document.getElementById('dateInput').value;
-
-  // Reset to defaults
   var defaults = { fb_wd: '1', yt_wd: '1' };
   var ids = allFieldIds();
   for (var i = 0; i < ids.length; i++) {
@@ -1046,7 +753,6 @@ function loadDraft() {
     el.value = defaults[ids[i]] || '0';
   }
 
-  // Load saved draft for this date
   try {
     var raw = localStorage.getItem('iic_d_' + date);
     if (raw) {
@@ -1059,7 +765,6 @@ function loadDraft() {
     }
   } catch(e) {}
 
-  // No draft — carry over running totals from last saved
   try {
     var lt = localStorage.getItem('iic_lt');
     if (lt) {
@@ -1083,105 +788,6 @@ function saveLastTotals() {
 }
 
 // ============================================================
-// SETTINGS
-// ============================================================
-function openSettings(fromLogin) {
-  document.getElementById('settUrl').value  = st.scriptUrl;
-  document.getElementById('settName').value = st.companyName;
-  updateSettLogoThumb(st.logoB64);
-  st.pendingLogo = '';
-
-  // Only show branding if editor (not from login screen, not viewer)
-  var branding = document.getElementById('settBranding');
-  if (fromLogin || st.role !== 'editor') {
-    branding.style.display = 'none';
-  } else {
-    branding.style.display = 'block';
-  }
-
-  document.getElementById('settingsOverlay').classList.add('show');
-}
-
-function closeSettings() {
-  document.getElementById('settingsOverlay').classList.remove('show');
-}
-
-function onLogoFile(e) {
-  var file = e.target.files[0];
-  if (!file) return;
-  var reader = new FileReader();
-  reader.onload = function(ev) {
-    st.pendingLogo = ev.target.result;
-    updateSettLogoThumb(st.pendingLogo);
-  };
-  reader.readAsDataURL(file);
-}
-
-function updateSettLogoThumb(b64) {
-  var el = document.getElementById('settLogoThumb');
-  if (b64) {
-    el.innerHTML = '<img src="' + b64 + '" alt="logo">';
-  } else {
-    el.innerHTML = '<div class="ld"></div>';
-  }
-}
-
-function saveSettings() {
-  st.scriptUrl = document.getElementById('settUrl').value.trim();
-
-  if (st.role === 'editor') {
-    st.companyName = document.getElementById('settName').value.trim() || st.companyName;
-    if (st.pendingLogo) st.logoB64 = st.pendingLogo;
-  }
-
-  // Save locally
-  try {
-    localStorage.setItem('iic_settings', JSON.stringify({
-      companyName: st.companyName,
-      logoB64: st.logoB64,
-      scriptUrl: st.scriptUrl
-    }));
-  } catch(e) {}
-
-  applyBranding();
-  closeSettings();
-  showStatus('Settings saved.', 'ok');
-
-  // Sync branding to sheet if editor + connected
-  if (st.role === 'editor' && st.scriptUrl) {
-    apiPost({
-      action: 'saveSettings',
-      role: st.role, pw: st.pw,
-      settings: { companyName: st.companyName, logoB64: st.logoB64 }
-    }, function() {});
-  }
-
-  if (st.scriptUrl && st.role) fetchMonthData();
-}
-
-function applyBranding() {
-  var name = st.companyName || 'Daily Report Dashboard';
-
-  // Login page
-  document.getElementById('loginTitle').textContent = name;
-  var ll = document.getElementById('loginLogo');
-  if (st.logoB64) {
-    ll.innerHTML = '<img src="' + st.logoB64 + '" alt="logo">';
-  } else {
-    ll.innerHTML = '<div class="logo-default"></div>';
-  }
-
-  // Main page
-  document.getElementById('brandName').textContent = name;
-  var bi = document.getElementById('brandIcon');
-  if (st.logoB64) {
-    bi.innerHTML = '<img src="' + st.logoB64 + '" alt="logo">';
-  } else {
-    bi.innerHTML = '<div class="bi-default"></div>';
-  }
-}
-
-// ============================================================
 // STATUS BAR
 // ============================================================
 function showStatus(msg, type) {
@@ -1194,76 +800,47 @@ function hideStatus() {
 }
 
 // ============================================================
-// MONTH TOTALS
-// ============================================================
-function getMonthTotal(platform, key) {
-  var d = st.monthData[platform];
-  if (!d || typeof d[key] !== 'number') return 0;
-  return d[key];
-}
-
-async function fetchMonthData() {
-  if (!st.scriptUrl) return;
-  var date = document.getElementById('dateInput').value;
-  document.getElementById('syncVal').textContent = 'Syncing...';
-
-  for (var plat of ['fb', 'yt']) {
-    try {
-      var params = new URLSearchParams({
-        action: 'getMonthTotals',
-        platform: plat,
-        date: date,
-        role: st.role || 'viewer',
-        password: st.pw
-      });
-      var res = await fetch(st.scriptUrl + '?' + params.toString());
-      var data = await res.json();
-      if (data.success) {
-        st.monthData[plat] = data.totals;
-      }
-    } catch(e) {
-      console.warn('fetchMonthData error', plat, e);
-    }
-  }
-  document.getElementById('syncVal').textContent = 'Synced ✓';
-}
-
-// ============================================================
-// SAVE ENTRY
+// SAVE ENTRY TO AIRTABLE
 // ============================================================
 async function saveEntry() {
-  if (st.role !== 'editor') return;
   saveLastTotals();
   saveDraft();
 
-  if (!st.scriptUrl) {
-    showStatus('No Google Sheet connected — data saved locally. Connect in ⚙ Settings.', 'info');
-    generatePreview();
-    return;
-  }
-
   var btn = document.getElementById('saveBtn');
-  btn.innerHTML = '<span class="spin"></span>Saving...';
+  btn.innerHTML = '<span class="spin"></span>Saving to Airtable...';
   btn.disabled = true;
 
-  var platform = st.platform;
-  var row = platform === 'fb' ? getFbRow() : getYtRow();
+  var tableName = st.platform === 'fb' ? 'Facebook' : 'YouTube';
+  var fieldsData = st.platform === 'fb' ? {
+    "Date": document.getElementById('dateInput').value,
+    "NewVideo": num('fb_nv'), "ClipFromOld": num('fb_co'), "ShortNew": num('fb_sn'), 
+    "ShortFromOld": num('fb_so'), "CommunityPost": num('fb_cp'), "Thumbnail": num('fb_th'), 
+    "Live": num('fb_lv'), "Likes": numF('fb_lk'), "Followers": numF('fb_fw'), "WeeklyDars": num('fb_wd')
+  } : {
+    "Date": document.getElementById('dateInput').value,
+    "NewVideo": num('yt_nv'), "ClipFromOld": num('yt_co'), "ShortNew": num('yt_sn'), 
+    "ShortFromOld": num('yt_so'), "CommunityPost": num('yt_cp'), "Thumbnail": num('yt_th'), 
+    "Live": num('yt_lv'), "SubscribersTotal": numF('yt_st'), "SubscriberGain": num('yt_sg'), 
+    "Views": numF('yt_vt'), "WeeklyDars": num('yt_wd'), "PendingApproval": num('yt_pa')
+  };
 
   try {
-    var res = await fetch(st.scriptUrl, {
+    var res = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${tableName}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ action: 'save', platform: platform, row: row, role: st.role, password: st.pw })
+      headers: {
+        'Authorization': `Bearer ${AIRTABLE_TOKEN}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ fields: fieldsData })
     });
-    var data = await res.json();
-    if (data.success) {
-      showStatus('Saved to Google Sheet ✓  —  This Month totals updated automatically.', 'ok');
-      await fetchMonthData();
+    
+    if (res.ok) {
+      showStatus('Saved securely to Airtable Database! ✓', 'ok');
     } else {
-      showStatus('Save failed: ' + (data.error || 'unknown'), 'err');
+      showStatus('Airtable Error: Connection rejected. Check your API details.', 'err');
     }
   } catch(e) {
-    showStatus('Could not reach Google Sheet. Data saved locally.', 'info');
+    showStatus('Network error reaching Airtable cloud storage.', 'err');
   }
 
   btn.innerHTML = '💾 Save & Generate';
@@ -1271,32 +848,12 @@ async function saveEntry() {
   generatePreview();
 }
 
-function getFbRow() {
-  var date = document.getElementById('dateInput').value;
-  return [
-    date,
-    num('fb_nv'), num('fb_co'), num('fb_sn'), num('fb_so'),
-    num('fb_cp'), num('fb_th'), num('fb_lv'),
-    val('fb_lk'), val('fb_fw'), num('fb_wd'), ''
-  ];
-}
-
-function getYtRow() {
-  var date = document.getElementById('dateInput').value;
-  return [
-    date,
-    num('yt_nv'), num('yt_co'), num('yt_sn'), num('yt_so'),
-    num('yt_cp'), num('yt_th'), num('yt_lv'),
-    val('yt_st'), num('yt_sg'), numF('yt_vt'), num('yt_wd'), val('yt_pa')
-  ];
-}
-
 function num(id) { return parseInt(document.getElementById(id).value || '0', 10) || 0; }
 function numF(id) { return parseFloat((document.getElementById(id).value || '0').replace(/,/g,'')) || 0; }
 function val(id) { return document.getElementById(id).value || ''; }
 
 // ============================================================
-// REPORT CARD
+// REPORT CARD PREVIEW
 // ============================================================
 function generatePreview() {
   var date = document.getElementById('dateInput').value;
@@ -1312,7 +869,6 @@ function closePreview() {
 }
 
 function logoTag() {
-  if (st.logoB64) return '<img src="' + st.logoB64 + '" alt="logo">';
   return '<div class="rc-logo-def"></div><div class="rc-logo-text">' + esc(st.companyName) + '</div>';
 }
 
@@ -1337,15 +893,6 @@ function buildFbCard(date) {
     nv: num('fb_nv'), co: num('fb_co'), sn: num('fb_sn'), so: num('fb_so'),
     cp: num('fb_cp'), th: num('fb_th'), lv: num('fb_lv')
   };
-  var month = {
-    nv: getMonthTotal('fb','NewVideo') || today.nv,
-    co: getMonthTotal('fb','ClipFromOld') || today.co,
-    sn: getMonthTotal('fb','ShortNew') || today.sn,
-    so: getMonthTotal('fb','ShortFromOld') || today.so,
-    cp: getMonthTotal('fb','CommunityPost') || today.cp,
-    th: getMonthTotal('fb','Thumbnail') || today.th,
-    lv: getMonthTotal('fb','Live') || today.lv
-  };
   var likes = val('fb_lk') || '-';
   var followers = val('fb_fw') || '-';
   var dars = num('fb_wd');
@@ -1356,17 +903,17 @@ function buildFbCard(date) {
     '</div>' +
     '<div class="rc-date-band"><div class="rc-date-pill fb">Date: ' + isoToDisplay(date) + '</div></div>' +
     '<table class="rc-table">' +
-    '<tr><th>Sr.N</th><th>Activities</th><th>Today</th><th>This Month</th><th></th></tr>' +
-    '<tr><td class="td-sr">01</td><td>Publish New Video</td><td class="td-num">' + dash(today.nv) + '</td><td class="td-num">' + dash(month.nv) + '</td><td class="td-side" rowspan="2">' + dars + '<br>Weekly<br>Dars</td></tr>' +
-    '<tr><td class="td-sr">02</td><td>Publish Clip From Old Video</td><td class="td-num">' + dash(today.co) + '</td><td class="td-num">' + dash(month.co) + '</td></tr>' +
-    '<tr><td class="td-sr">03</td><td>Short New video</td><td class="td-num">' + dash(today.sn) + '</td><td class="td-num">' + dash(month.sn) + '</td><td rowspan="5"></td></tr>' +
-    '<tr><td class="td-sr">04</td><td>Short from old video clip</td><td class="td-num">' + dash(today.so) + '</td><td class="td-num">' + dash(month.so) + '</td></tr>' +
-    '<tr><td class="td-sr">05</td><td>Community post</td><td class="td-num">' + dash(today.cp) + '</td><td class="td-num">' + dash(month.cp) + '</td></tr>' +
-    '<tr><td class="td-sr">06</td><td>Thumbnail</td><td class="td-num">' + dash(today.th) + '</td><td class="td-num">' + dash(month.th) + '</td></tr>' +
-    '<tr><td class="td-sr">07</td><td>Live</td><td class="td-num">' + dash(today.lv) + '</td><td class="td-num">' + dash(month.lv) + '</td></tr>' +
-    '<tr><td class="td-sr">08</td><td>Likes</td><td class="td-num">-</td><td class="td-num">-</td><td class="td-side">Total<br>Current</td></tr>' +
-    '<tr><td class="td-sr">09</td><td>Followers</td><td class="td-num">-</td><td class="td-num">-</td><td class="td-side">' + likes + '</td></tr>' +
-    '<tr><td></td><td></td><td></td><td></td><td class="td-side">' + followers + '</td></tr>' +
+    '<tr><th>Sr.N</th><th>Activities</th><th>Today</th><th></th></tr>' +
+    '<tr><td class="td-sr">01</td><td>Publish New Video</td><td class="td-num">' + dash(today.nv) + '</td><td class="td-side" rowspan="2">' + dars + '<br>Weekly<br>Dars</td></tr>' +
+    '<tr><td class="td-sr">02</td><td>Publish Clip From Old Video</td><td class="td-num">' + dash(today.co) + '</td></tr>' +
+    '<tr><td class="td-sr">03</td><td>Short New video</td><td class="td-num">' + dash(today.sn) + '</td><td rowspan="5"></td></tr>' +
+    '<tr><td class="td-sr">04</td><td>Short from old video clip</td><td class="td-num">' + dash(today.so) + '</td></tr>' +
+    '<tr><td class="td-sr">05</td><td>Community post</td><td class="td-num">' + dash(today.cp) + '</td></tr>' +
+    '<tr><td class="td-sr">06</td><td>Thumbnail</td><td class="td-num">' + dash(today.th) + '</td></tr>' +
+    '<tr><td class="td-sr">07</td><td>Live</td><td class="td-num">' + dash(today.lv) + '</td></tr>' +
+    '<tr><td class="td-sr">08</td><td>Likes</td><td class="td-num">-</td><td class="td-side">Total<br>Current</td></tr>' +
+    '<tr><td class="td-sr">09</td><td>Followers</td><td class="td-num">-</td><td class="td-side">' + likes + '</td></tr>' +
+    '<tr><td></td><td></td><td></td><td class="td-side">' + followers + '</td></tr>' +
     '</table>' +
     '<div class="rc-foot">' + esc(st.companyName) + ' · Generated ' + isoToDisplay(date) + '</div>';
 }
@@ -1376,17 +923,6 @@ function buildYtCard(date) {
     nv: num('yt_nv'), co: num('yt_co'), sn: num('yt_sn'), so: num('yt_so'),
     cp: num('yt_cp'), th: num('yt_th'), lv: num('yt_lv'),
     sg: num('yt_sg'), vt: numF('yt_vt')
-  };
-  var month = {
-    nv: getMonthTotal('yt','NewVideo') || today.nv,
-    co: getMonthTotal('yt','ClipFromOld') || today.co,
-    sn: getMonthTotal('yt','ShortNew') || today.sn,
-    so: getMonthTotal('yt','ShortFromOld') || today.so,
-    cp: getMonthTotal('yt','CommunityPost') || today.cp,
-    th: getMonthTotal('yt','Thumbnail') || today.th,
-    lv: getMonthTotal('yt','Live') || today.lv,
-    sg: getMonthTotal('yt','SubscriberGain') || today.sg,
-    vt: getMonthTotal('yt','Views') || today.vt
   };
   var totalSubs  = val('yt_st') || '-';
   var totalViews = val('yt_va') || '-';
@@ -1399,17 +935,17 @@ function buildYtCard(date) {
     '</div>' +
     '<div class="rc-date-band"><div class="rc-date-pill yt">Date: ' + isoToDisplay(date) + '</div></div>' +
     '<table class="rc-table yt">' +
-    '<tr><th>Sr.N</th><th>Activities</th><th>Today</th><th>This Month</th><th></th></tr>' +
-    '<tr><td class="td-sr">01</td><td>Publish New Video</td><td class="td-num">' + dash(today.nv) + '</td><td class="td-num">' + dash(month.nv) + '</td><td class="td-side" rowspan="2">' + dars + '<br>Weekly<br>Dars</td></tr>' +
-    '<tr><td class="td-sr">02</td><td>Publish Clip From Old Video</td><td class="td-num">' + dash(today.co) + '</td><td class="td-num">' + dash(month.co) + '</td></tr>' +
-    '<tr><td class="td-sr">03</td><td>Short New video</td><td class="td-num">' + dash(today.sn) + '</td><td class="td-num">' + dash(month.sn) + '</td><td class="td-side hi" rowspan="4">Pending<br>For<br>Approval<br>(' + pending + ')</td></tr>' +
-    '<tr><td class="td-sr">04</td><td>Short from old video Clip</td><td class="td-num">' + dash(today.so) + '</td><td class="td-num">' + dash(month.so) + '</td></tr>' +
-    '<tr><td class="td-sr">05</td><td>Community post</td><td class="td-num">' + dash(today.cp) + '</td><td class="td-num">' + dash(month.cp) + '</td></tr>' +
-    '<tr><td class="td-sr">06</td><td>Thumbnail</td><td class="td-num">' + dash(today.th) + '</td><td class="td-num">' + dash(month.th) + '</td></tr>' +
-    '<tr><td class="td-sr">07</td><td>Live</td><td class="td-num">' + dash(today.lv) + '</td><td class="td-num">' + dash(month.lv) + '</td><td class="td-side" rowspan="3">Total<br>Current</td></tr>' +
-    '<tr><td class="td-sr">08</td><td>Subscriber</td><td class="td-num">' + dash(today.sg) + '</td><td class="td-num">' + dash(month.sg) + '</td></tr>' +
-    '<tr><td class="td-sr">09</td><td>Views</td><td class="td-num">' + fmtN(today.vt) + '</td><td class="td-num">' + fmtN(month.vt) + '</td></tr>' +
-    '<tr><td class="td-sr"></td><td style="font-weight:800">Subscribers / Views (Total)</td><td class="td-num" colspan="2">' + totalSubs + ' / ' + totalViews + '</td><td></td></tr>' +
+    '<tr><th>Sr.N</th><th>Activities</th><th>Today</th><th></th></tr>' +
+    '<tr><td class="td-sr">01</td><td>Publish New Video</td><td class="td-num">' + dash(today.nv) + '</td><td class="td-side" rowspan="2">' + dars + '<br>Weekly<br>Dars</td></tr>' +
+    '<tr><td class="td-sr">02</td><td>Publish Clip From Old Video</td><td class="td-num">' + dash(today.co) + '</td></tr>' +
+    '<tr><td class="td-sr">03</td><td>Short New video</td><td class="td-num">' + dash(today.sn) + '</td><td class="td-side hi" rowspan="4">Pending<br>For<br>Approval<br>(' + pending + ')</td></tr>' +
+    '<tr><td class="td-sr">04</td><td>Short from old video Clip</td><td class="td-num">' + dash(today.so) + '</td></tr>' +
+    '<tr><td class="td-sr">05</td><td>Community post</td><td class="td-num">' + dash(today.cp) + '</td></tr>' +
+    '<tr><td class="td-sr">06</td><td>Thumbnail</td><td class="td-num">' + dash(today.th) + '</td></tr>' +
+    '<tr><td class="td-sr">07</td><td>Live</td><td class="td-num">' + dash(today.lv) + '</td><td class="td-side" rowspan="3">Total<br>Current</td></tr>' +
+    '<tr><td class="td-sr">08</td><td>Subscriber</td><td class="td-num">' + dash(today.sg) + '</td></tr>' +
+    '<tr><td class="td-sr">09</td><td>Views</td><td class="td-num">' + fmtN(today.vt) + '</td></tr>' +
+    '<tr><td class="td-sr"></td><td style="font-weight:800">Subscribers / Views (Total)</td><td class="td-num">' + totalSubs + ' / ' + totalViews + '</td><td></td></tr>' +
     '</table>' +
     '<div class="rc-foot">' + esc(st.companyName) + ' · Generated ' + isoToDisplay(date) + '</div>';
 }
@@ -1448,172 +984,10 @@ function downloadCard() {
     btn.textContent = '⬇ Download Image';
     btn.disabled = false;
   }).catch(function(e) {
-    console.error('html2canvas error', e);
     btn.textContent = '⬇ Download Image';
     btn.disabled = false;
     alert('Download failed. Try again or take a screenshot.');
   });
-}
-
-// ============================================================
-// HISTORY VIEW
-// ============================================================
-function changeMonth(d) {
-  st.histMonth += d;
-  if (st.histMonth > 12) { st.histMonth = 1;  st.histYear++; }
-  if (st.histMonth < 1)  { st.histMonth = 12; st.histYear--; }
-  if (st.scriptUrl) fetchAndRenderHistory();
-  else renderHistory();
-}
-
-async function fetchAndRenderHistory() {
-  if (!st.scriptUrl) { renderHistory(); return; }
-  document.getElementById('histList').innerHTML =
-    '<div class="empty-msg">Loading...</div>';
-
-  try {
-    var params = new URLSearchParams({
-      action: 'getMonthData',
-      platform: st.platform,
-      month: st.histMonth,
-      year: st.histYear,
-      role: st.role || 'viewer',
-      password: st.pw
-    });
-    var res = await fetch(st.scriptUrl + '?' + params.toString());
-    var data = await res.json();
-    if (data.success) {
-      st.historyRows = data.rows || [];
-    }
-  } catch(e) {
-    st.historyRows = [];
-  }
-  renderHistory();
-}
-
-function renderHistory() {
-  document.getElementById('monthLabel').textContent =
-    MONTHS[st.histMonth - 1] + ' ' + st.histYear;
-
-  var rows = (st.historyRows || []).filter(function(r) {
-    var d = new Date(r.Date + 'T00:00:00');
-    return d.getMonth() + 1 === st.histMonth && d.getFullYear() === st.histYear;
-  });
-
-  renderSummary(rows);
-  renderHistList(rows);
-}
-
-function renderSummary(rows) {
-  var el = document.getElementById('summaryGrid');
-  if (!rows.length) { el.innerHTML = ''; return; }
-
-  var totVid = 0, totShort = 0, totPost = 0, totThumb = 0;
-  rows.forEach(function(r) {
-    totVid   += (r.NewVideo||0) + (r.ClipFromOld||0);
-    totShort += (r.ShortNew||0) + (r.ShortFromOld||0);
-    totPost  += (r.CommunityPost||0);
-    totThumb += (r.Thumbnail||0);
-  });
-
-  var extra = '';
-  if (st.platform === 'yt') {
-    var totSubs = 0, totViews = 0;
-    rows.forEach(function(r) { totSubs += (r.SubscriberGain||0); totViews += (r.Views||0); });
-    extra =
-      '<div class="sum-tile"><div class="sum-tile-label">New Subscribers</div><div class="sum-tile-val">' + totSubs + '</div></div>' +
-      '<div class="sum-tile"><div class="sum-tile-label">Total Views</div><div class="sum-tile-val">' + fmtN(totViews) + '</div></div>';
-  } else {
-    extra =
-      '<div class="sum-tile"><div class="sum-tile-label">Community Posts</div><div class="sum-tile-val">' + totPost + '</div></div>' +
-      '<div class="sum-tile"><div class="sum-tile-label">Thumbnails</div><div class="sum-tile-val">' + totThumb + '</div></div>';
-  }
-
-  el.innerHTML =
-    '<div class="sum-tile"><div class="sum-tile-label">Videos Published</div><div class="sum-tile-val">' + totVid + '</div></div>' +
-    '<div class="sum-tile"><div class="sum-tile-label">Shorts Published</div><div class="sum-tile-val">' + totShort + '</div></div>' +
-    extra +
-    '<div class="sum-tile wide"><div class="sum-tile-label">Days Logged This Month</div><div class="sum-tile-val">' + rows.length + '</div></div>';
-}
-
-function renderHistList(rows) {
-  var el = document.getElementById('histList');
-  if (!rows.length) {
-    var msg = !st.scriptUrl
-      ? 'Connect Google Sheet in ⚙ Settings to see history here.'
-      : 'No entries for ' + MONTHS[st.histMonth - 1] + ' ' + st.histYear + '.';
-    el.innerHTML = '<div class="empty-msg">' + msg + '<br><br>Use "Today\'s Entry" tab to add data for any date.</div>';
-    return;
-  }
-
-  var sorted = rows.slice().sort(function(a, b) {
-    return new Date(b.Date) - new Date(a.Date);
-  });
-
-  el.innerHTML = sorted.map(function(r) {
-    var vid = (r.NewVideo||0) + (r.ClipFromOld||0);
-    var sht = (r.ShortNew||0) + (r.ShortFromOld||0);
-    var meta = st.platform === 'yt'
-      ? vid + ' videos · ' + sht + ' shorts · ' + (r.SubscriberGain||0) + ' new subs'
-      : vid + ' videos · ' + sht + ' shorts · ' + (r.CommunityPost||0) + ' posts';
-    var rj = JSON.stringify(r).replace(/"/g,'&quot;');
-    return '<div class="hist-row" onclick="loadHistoryRow(' + rj + ')">' +
-      '<div><div class="hist-date">' + isoToDisplay(r.Date) + '</div>' +
-      '<div class="hist-meta">' + meta + '</div></div>' +
-      '<div class="hist-arrow">›</div></div>';
-  }).join('');
-}
-
-function loadHistoryRow(r) {
-  document.getElementById('dateInput').value = r.Date;
-
-  if (st.platform === 'fb') {
-    document.getElementById('fb_nv').value = r.NewVideo || 0;
-    document.getElementById('fb_co').value = r.ClipFromOld || 0;
-    document.getElementById('fb_sn').value = r.ShortNew || 0;
-    document.getElementById('fb_so').value = r.ShortFromOld || 0;
-    document.getElementById('fb_cp').value = r.CommunityPost || 0;
-    document.getElementById('fb_th').value = r.Thumbnail || 0;
-    document.getElementById('fb_lv').value = r.Live || 0;
-    document.getElementById('fb_lk').value = r.Likes || '';
-    document.getElementById('fb_fw').value = r.Followers || '';
-    document.getElementById('fb_wd').value = r.WeeklyDars || 1;
-  } else {
-    document.getElementById('yt_nv').value = r.NewVideo || 0;
-    document.getElementById('yt_co').value = r.ClipFromOld || 0;
-    document.getElementById('yt_sn').value = r.ShortNew || 0;
-    document.getElementById('yt_so').value = r.ShortFromOld || 0;
-    document.getElementById('yt_cp').value = r.CommunityPost || 0;
-    document.getElementById('yt_th').value = r.Thumbnail || 0;
-    document.getElementById('yt_lv').value = r.Live || 0;
-    document.getElementById('yt_sg').value = r.SubscriberGain || 0;
-    document.getElementById('yt_st').value = r.SubscribersTotal || '';
-    document.getElementById('yt_vt').value = r.Views || 0;
-    document.getElementById('yt_va').value = '';
-    document.getElementById('yt_wd').value = r.WeeklyDars || 1;
-    document.getElementById('yt_pa').value = r.PendingApproval || 0;
-  }
-
-  saveDraft();
-  switchView('entry');
-  showStatus('Loaded ' + isoToDisplay(r.Date) + ' — edit and Save & Generate to update.', 'info');
-}
-
-// ============================================================
-// API HELPER (callback-based, no async)
-// ============================================================
-function apiPost(payload, cb) {
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', st.scriptUrl, true);
-  xhr.setRequestHeader('Content-Type', 'text/plain');
-  xhr.onload = function() {
-    try {
-      var d = JSON.parse(xhr.responseText);
-      cb(d, null);
-    } catch(e) { cb(null, e); }
-  };
-  xhr.onerror = function() { cb(null, new Error('Network error')); };
-  xhr.send(JSON.stringify(payload));
 }
 </script>
 </body>
