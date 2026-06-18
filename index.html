@@ -22,8 +22,6 @@ body{
   --navy2:#243d63;
   --navy3:#2e4f7a;
   --gold:#c9a44a;
-  --gold2:#e8d5a3;
-  --gold3:#f5ecd5;
   --paper:#f0ede8;
   --white:#ffffff;
   --border:#e2dfd8;
@@ -283,7 +281,7 @@ body{
 .bbar-btn:active{opacity:0.85;transform:scale(0.99)}
 .bbar-btn:disabled{opacity:0.5;pointer-events:none}
 
-/* ===================== MODALS (SETTINGS & PREVIEW) ===================== */
+/* ===================== MODALS ===================== */
 .overlay{
   position:fixed;inset:0;background:rgba(20,30,50,0.55);
   z-index:100;display:none;
@@ -355,7 +353,7 @@ body{
 .prev-body{
   flex:1;overflow:auto;padding:16px;
   display:flex;justify-content:center;
-  align-items:flex-start; /* Fixes vertical stretching for html2canvas */
+  align-items:flex-start;
 }
 .prev-foot{
   padding:14px 16px max(14px,env(safe-area-inset-bottom));
@@ -371,7 +369,7 @@ body{
 /* ===================== REPORT CARD (CLASSIC STYLE) ===================== */
 #reportCard {
   width: 620px;
-  height: max-content; /* Fixes vertical stretching for html2canvas */
+  height: max-content;
   font-family: Arial, Helvetica, sans-serif;
   background: #fff;
   padding: 15px;
@@ -490,8 +488,6 @@ body{
   color: #666;
   margin-top: 12px;
 }
-
-/* ===================== SPINNER ===================== */
 .spin{
   display:inline-block;width:14px;height:14px;
   border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;
@@ -499,32 +495,27 @@ body{
   vertical-align:middle;margin-right:6px;
 }
 @keyframes rot{to{transform:rotate(360deg)}}
-
-/* ===================== UTILITIES ===================== */
 .hidden{display:none!important}
 </style>
 </head>
 <body>
 <div id="app">
 
+<!-- =================== LOGIN PAGE =================== -->
 <div id="loginPage" class="page active">
   <div class="login-box">
-    <div class="login-logo" id="loginLogo">
-      <div class="logo-default"></div>
-    </div>
+    <div class="login-logo" id="loginLogo"><div class="logo-default"></div></div>
     <div class="login-title" id="loginTitle">Daily Report Dashboard</div>
     <div class="login-sub">Islamic Information Centre</div>
-
     <div class="login-field-label">Enter Your Password</div>
-    <input class="login-input" type="password" id="loginPw" placeholder="• • • • • • • •"
-      autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+    <input class="login-input" type="password" id="loginPw" placeholder="• • • • • • • •" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
     <div class="login-error" id="loginErr"></div>
     <button class="login-btn" id="loginBtn" onclick="doLogin()">Sign In</button>
   </div>
 </div>
 
+<!-- =================== MAIN PAGE =================== -->
 <div id="mainPage" class="page">
-
   <div class="topbar">
     <div class="topbar-inner">
       <div class="topbar-row1">
@@ -554,7 +545,6 @@ body{
   </div>
 
   <div class="content">
-
     <div class="ptabs">
       <div class="ptab fb on" id="tabFb" onclick="switchPlatform('fb')">📘 Facebook</div>
       <div class="ptab yt" id="tabYt" onclick="switchPlatform('yt')">▶️ YouTube</div>
@@ -563,7 +553,7 @@ body{
     <div class="status-bar" id="statusBar"></div>
 
     <div id="entryView">
-
+      <!-- FACEBOOK FORM -->
       <div id="fbForm">
         <div class="sec">
           <div class="sec-head">📹 Today's Activities</div>
@@ -600,6 +590,7 @@ body{
         </div>
       </div>
 
+      <!-- YOUTUBE FORM -->
       <div id="ytForm" class="hidden">
         <div class="sec">
           <div class="sec-head">📹 Today's Activities</div>
@@ -645,11 +636,18 @@ body{
             <div class="stepper"><button class="st-btn" onclick="adj('yt_pa',-1)">−</button><input class="st-val" type="number" id="yt_pa" value="0" min="0"><button class="st-btn" onclick="adj('yt_pa',1)">+</button></div></div>
         </div>
       </div>
-    </div></div></div></div><div class="bottombar" id="bottomBar">
+    </div><!-- /entryView -->
+  </div><!-- /content -->
+</div><!-- /mainPage -->
+</div><!-- /app -->
+
+<!-- BOTTOM BAR -->
+<div class="bottombar" id="bottomBar">
   <button class="bbar-btn ghost" onclick="generatePreview()">👁 Preview</button>
   <button class="bbar-btn primary" id="saveBtn" onclick="saveEntry()">💾 Save & Generate</button>
 </div>
 
+<!-- =================== SETTINGS OVERLAY =================== -->
 <div class="overlay" id="settingsOverlay">
   <div class="sheet">
     <div class="sheet-title">Settings</div>
@@ -673,6 +671,7 @@ body{
   </div>
 </div>
 
+<!-- =================== PREVIEW OVERLAY =================== -->
 <div id="previewOverlay">
   <div class="prev-head">
     <div class="prev-title" id="prevTitle">Report Preview</div>
@@ -687,9 +686,7 @@ body{
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
-  integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
-  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
 // ============================================================
@@ -699,7 +696,7 @@ var AIRTABLE_BASE_ID = "appuxIKf7ipI1wbVf";
 var AIRTABLE_TOKEN = "patSwe1HmH9gLstsB.37d4bf64a6a24f9006119b80ab443"+"f78c7d6dcad72450b93b7986aa8a05f99be";
 
 // ============================================================
-// STATE
+// STATE & RECORD TRACKING
 // ============================================================
 var st = {
   platform: 'fb',
@@ -710,12 +707,11 @@ var st = {
   pendingLogo: ''
 };
 
-// ============================================================
-// INIT
-// ============================================================
+// This tracks if a row already exists in Airtable so we don't duplicate it!
+var currentRecordIds = { fb: null, yt: null };
+
 window.addEventListener('load', function() {
   document.getElementById('dateInput').value = todayISO();
-
   try {
     var savedSettings = localStorage.getItem('iic_settings');
     if (savedSettings) {
@@ -724,7 +720,6 @@ window.addEventListener('load', function() {
       st.logoB64 = s.logoB64 || '';
     }
   } catch(e) {}
-
   applyBranding();
 
   try {
@@ -734,32 +729,21 @@ window.addEventListener('load', function() {
       showMain();
     }
   } catch(e) {}
-
   wireInputs();
 });
 
 function wireInputs() {
   var ids = allFieldIds();
   for (var i = 0; i < ids.length; i++) {
-    (function(id) {
-      var el = document.getElementById(id);
-      if (el) el.addEventListener('change', saveDraft);
-    })(ids[i]);
+    var el = document.getElementById(ids[i]);
+    if (el) el.addEventListener('change', saveDraft);
   }
 }
 
-// ============================================================
-// LOCAL AUTH LOGIC
-// ============================================================
 function doLogin() {
   var pw = document.getElementById('loginPw').value.trim();
   document.getElementById('loginErr').textContent = '';
-
-  if (!pw) {
-    document.getElementById('loginErr').textContent = 'Please enter a password.';
-    return;
-  }
-
+  if (!pw) { document.getElementById('loginErr').textContent = 'Please enter a password.'; return; }
   if (pw === "editor123") {
       st.role = 'editor';
       st.pw = pw;
@@ -772,22 +756,18 @@ function doLogin() {
 
 function doLogout() {
   st.role = null;
-  st.pw   = '';
+  st.pw = '';
   try { sessionStorage.removeItem('iic_r'); } catch(e) {}
   document.getElementById('loginPw').value = '';
-  document.getElementById('loginErr').textContent = '';
   showPage('loginPage');
 }
 
 function showMain() {
   document.getElementById('brandRole').textContent = 'Editor';
   showPage('mainPage');
-  loadDraft();
+  syncFromAirtable(); // Pull data from Cloud immediately upon login!
 }
 
-// ============================================================
-// PAGE NAVIGATION
-// ============================================================
 function showPage(id) {
   var pages = document.querySelectorAll('.page');
   for (var i = 0; i < pages.length; i++) pages[i].classList.remove('active');
@@ -803,9 +783,6 @@ function switchPlatform(p) {
   hideStatus();
 }
 
-// ============================================================
-// STEPPER ADJUST
-// ============================================================
 function adj(id, delta) {
   if (st.role !== 'editor') return;
   var el = document.getElementById(id);
@@ -816,16 +793,11 @@ function adj(id, delta) {
   saveDraft();
 }
 
-// ============================================================
-// DATE
-// ============================================================
 function todayISO() {
   var d = new Date();
   var y = d.getFullYear();
-  var m = String(d.getMonth() + 1);
-  var day = String(d.getDate());
-  if (m.length < 2) m = '0' + m;
-  if (day.length < 2) day = '0' + day;
+  var m = String(d.getMonth() + 1).padStart(2, '0');
+  var day = String(d.getDate()).padStart(2, '0');
   return y + '-' + m + '-' + day;
 }
 
@@ -835,13 +807,10 @@ function isoToDisplay(iso) {
 }
 
 function onDateChange() {
-  saveDraft();
-  loadDraft();
+  // Pull data from Cloud whenever the date is changed!
+  syncFromAirtable();
 }
 
-// ============================================================
-// DRAFT
-// ============================================================
 function allFieldIds() {
   return ['fb_nv','fb_co','fb_sn','fb_so','fb_cp','fb_th','fb_lv','fb_lk','fb_fw','fb_wd',
           'yt_nv','yt_co','yt_sn','yt_so','yt_cp','yt_th','yt_lv','yt_sg','yt_st','yt_vt','yt_va','yt_wd','yt_pa'];
@@ -858,26 +827,7 @@ function saveDraft() {
   try { localStorage.setItem('iic_d_' + date, JSON.stringify(d)); } catch(e) {}
 }
 
-function loadDraft() {
-  var date = document.getElementById('dateInput').value;
-  var defaults = { fb_wd: '1', yt_wd: '1' };
-  var ids = allFieldIds();
-  for (var i = 0; i < ids.length; i++) {
-    var el = document.getElementById(ids[i]);
-    if (!el) continue;
-    el.value = defaults[ids[i]] || '0';
-  }
-  try {
-    var raw = localStorage.getItem('iic_d_' + date);
-    if (raw) {
-      var d = JSON.parse(raw);
-      for (var key in d) {
-        var el2 = document.getElementById(key);
-        if (el2) el2.value = d[key];
-      }
-      return;
-    }
-  } catch(e) {}
+function loadLocalTotalsOnly() {
   try {
     var lt = localStorage.getItem('iic_lt');
     if (lt) {
@@ -890,6 +840,28 @@ function loadDraft() {
   } catch(e) {}
 }
 
+function loadDraft() {
+  var date = document.getElementById('dateInput').value;
+  var defaults = { fb_wd: '1', yt_wd: '1' };
+  var ids = allFieldIds();
+  for (var i = 0; i < ids.length; i++) {
+    var el = document.getElementById(ids[i]);
+    if (el) el.value = defaults[ids[i]] || '0';
+  }
+  try {
+    var raw = localStorage.getItem('iic_d_' + date);
+    if (raw) {
+      var d = JSON.parse(raw);
+      for (var key in d) {
+        var el2 = document.getElementById(key);
+        if (el2) el2.value = d[key];
+      }
+      return;
+    }
+  } catch(e) {}
+  loadLocalTotalsOnly();
+}
+
 function saveLastTotals() {
   var t = {
     fb_lk: document.getElementById('fb_lk').value,
@@ -900,17 +872,12 @@ function saveLastTotals() {
   try { localStorage.setItem('iic_lt', JSON.stringify(t)); } catch(e) {}
 }
 
-// ============================================================
-// STATUS BAR
-// ============================================================
 function showStatus(msg, type) {
   var el = document.getElementById('statusBar');
   el.textContent = msg;
   el.className = 'status-bar show ' + type;
 }
-function hideStatus() {
-  document.getElementById('statusBar').className = 'status-bar';
-}
+function hideStatus() { document.getElementById('statusBar').className = 'status-bar'; }
 
 // ============================================================
 // SETTINGS
@@ -921,11 +888,7 @@ function openSettings() {
   st.pendingLogo = '';
   document.getElementById('settingsOverlay').classList.add('show');
 }
-
-function closeSettings() {
-  document.getElementById('settingsOverlay').classList.remove('show');
-}
-
+function closeSettings() { document.getElementById('settingsOverlay').classList.remove('show'); }
 function onLogoFile(e) {
   var file = e.target.files[0];
   if (!file) return;
@@ -936,37 +899,23 @@ function onLogoFile(e) {
   };
   reader.readAsDataURL(file);
 }
-
 function updateSettLogoThumb(b64) {
   var el = document.getElementById('settLogoThumb');
-  if (b64) {
-    el.innerHTML = '<img src="' + b64 + '" style="width:100%;height:100%;object-fit:cover">';
-  } else {
-    el.innerHTML = '<div class="ld"></div>';
-  }
+  if (b64) { el.innerHTML = '<img src="' + b64 + '" style="width:100%;height:100%;object-fit:cover">'; } 
+  else { el.innerHTML = '<div class="ld"></div>'; }
 }
-
 function saveSettings() {
   st.companyName = document.getElementById('settName').value.trim() || st.companyName;
   if (st.pendingLogo) st.logoB64 = st.pendingLogo;
-
-  try {
-    localStorage.setItem('iic_settings', JSON.stringify({
-      companyName: st.companyName,
-      logoB64: st.logoB64
-    }));
-  } catch(e) {}
-
+  try { localStorage.setItem('iic_settings', JSON.stringify({ companyName: st.companyName, logoB64: st.logoB64 })); } catch(e) {}
   applyBranding();
   closeSettings();
   showStatus('Settings saved.', 'ok');
 }
-
 function applyBranding() {
   var name = st.companyName || 'Daily Report Dashboard';
   document.getElementById('loginTitle').textContent = name;
   document.getElementById('brandName').textContent = name;
-  
   var ll = document.getElementById('loginLogo');
   var bi = document.getElementById('brandIcon');
   if (st.logoB64) {
@@ -979,7 +928,81 @@ function applyBranding() {
 }
 
 // ============================================================
-// SAVE ENTRY TO AIRTABLE
+// TWO-WAY SYNC (FETCH FROM AIRTABLE)
+// ============================================================
+async function syncFromAirtable() {
+  if (st.role !== 'editor') return;
+  var date = document.getElementById('dateInput').value;
+  var syncText = document.getElementById('syncVal');
+  syncText.textContent = 'Syncing...';
+
+  try {
+    var formula = encodeURIComponent("{Date}='" + date + "'");
+
+    // Fetch Facebook
+    var resFb = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Facebook?filterByFormula=${formula}`, {
+      headers: { 'Authorization': `Bearer ${AIRTABLE_TOKEN}` }
+    });
+    var dataFb = await resFb.json();
+    
+    if (dataFb.records && dataFb.records.length > 0) {
+      currentRecordIds.fb = dataFb.records[0].id;
+      var f = dataFb.records[0].fields;
+      document.getElementById('fb_nv').value = f.NewVideo !== undefined ? f.NewVideo : 0;
+      document.getElementById('fb_co').value = f.ClipFromOld !== undefined ? f.ClipFromOld : 0;
+      document.getElementById('fb_sn').value = f.ShortNew !== undefined ? f.ShortNew : 0;
+      document.getElementById('fb_so').value = f.ShortFromOld !== undefined ? f.ShortFromOld : 0;
+      document.getElementById('fb_cp').value = f.CommunityPost !== undefined ? f.CommunityPost : 0;
+      document.getElementById('fb_th').value = f.Thumbnail !== undefined ? f.Thumbnail : 0;
+      document.getElementById('fb_lv').value = f.Live !== undefined ? f.Live : 0;
+      document.getElementById('fb_lk').value = f.Likes || '';
+      document.getElementById('fb_fw').value = f.Followers || '';
+      document.getElementById('fb_wd').value = f.WeeklyDars !== undefined ? f.WeeklyDars : 1;
+    } else {
+      currentRecordIds.fb = null;
+    }
+
+    // Fetch YouTube
+    var resYt = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/YouTube?filterByFormula=${formula}`, {
+      headers: { 'Authorization': `Bearer ${AIRTABLE_TOKEN}` }
+    });
+    var dataYt = await resYt.json();
+
+    if (dataYt.records && dataYt.records.length > 0) {
+      currentRecordIds.yt = dataYt.records[0].id;
+      var y = dataYt.records[0].fields;
+      document.getElementById('yt_nv').value = y.NewVideo !== undefined ? y.NewVideo : 0;
+      document.getElementById('yt_co').value = y.ClipFromOld !== undefined ? y.ClipFromOld : 0;
+      document.getElementById('yt_sn').value = y.ShortNew !== undefined ? y.ShortNew : 0;
+      document.getElementById('yt_so').value = y.ShortFromOld !== undefined ? y.ShortFromOld : 0;
+      document.getElementById('yt_cp').value = y.CommunityPost !== undefined ? y.CommunityPost : 0;
+      document.getElementById('yt_th').value = y.Thumbnail !== undefined ? y.Thumbnail : 0;
+      document.getElementById('yt_lv').value = y.Live !== undefined ? y.Live : 0;
+      document.getElementById('yt_st').value = y.SubscribersTotal || '';
+      document.getElementById('yt_sg').value = y.SubscriberGain !== undefined ? y.SubscriberGain : 0;
+      document.getElementById('yt_vt').value = y.Views || '';
+      document.getElementById('yt_wd').value = y.WeeklyDars !== undefined ? y.WeeklyDars : 1;
+      document.getElementById('yt_pa').value = y.PendingApproval !== undefined ? y.PendingApproval : 0;
+    } else {
+      currentRecordIds.yt = null;
+    }
+
+    // If records were totally empty, fall back to local draft/totals to prevent wiping unsaved inputs
+    if (!currentRecordIds.fb && !currentRecordIds.yt) {
+      loadDraft();
+    } else {
+      loadLocalTotalsOnly(); // ensure lifetime totals map over correctly if missing
+    }
+    
+    syncText.textContent = 'Synced ✓';
+  } catch(e) {
+    syncText.textContent = 'Offline';
+    loadDraft(); // Fallback to local device storage if internet is broken
+  }
+}
+
+// ============================================================
+// SAVE ENTRY TO AIRTABLE (NOW WITH SMART UPDATE)
 // ============================================================
 async function saveEntry() {
   saveLastTotals();
@@ -1003,9 +1026,19 @@ async function saveEntry() {
     "Views": numF('yt_vt'), "WeeklyDars": num('yt_wd'), "PendingApproval": num('yt_pa')
   };
 
+  // SMART UPDATE LOGIC
+  var recordId = currentRecordIds[st.platform];
+  var url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${tableName}`;
+  var method = 'POST'; // Default creates a new row
+
+  if (recordId) {
+    url += `/${recordId}`;
+    method = 'PATCH'; // Updates an existing row to avoid duplicates!
+  }
+
   try {
-    var res = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${tableName}`, {
-      method: 'POST',
+    var res = await fetch(url, {
+      method: method,
       headers: {
         'Authorization': `Bearer ${AIRTABLE_TOKEN}`,
         'Content-Type': 'application/json'
@@ -1014,9 +1047,11 @@ async function saveEntry() {
     });
     
     if (res.ok) {
-      showStatus('Saved securely to Airtable Database! ✓', 'ok');
+      var jsonRes = await res.json();
+      currentRecordIds[st.platform] = jsonRes.id; // Remember the ID just in case they click save twice!
+      showStatus(method === 'PATCH' ? 'Updated existing Airtable row! ✓' : 'Saved new row to Airtable! ✓', 'ok');
     } else {
-      showStatus('Airtable Error: Connection rejected. Check your API details.', 'err');
+      showStatus('Airtable Error: Connection rejected.', 'err');
     }
   } catch(e) {
     showStatus('Network error reaching Airtable cloud storage.', 'err');
@@ -1032,7 +1067,7 @@ function numF(id) { return parseFloat((document.getElementById(id).value || '0')
 function val(id) { return document.getElementById(id).value || ''; }
 
 // ============================================================
-// REPORT CARD PREVIEW (CLASSIC STYLE)
+// REPORT CARD PREVIEW
 // ============================================================
 function generatePreview() {
   var date = document.getElementById('dateInput').value;
@@ -1042,25 +1077,13 @@ function generatePreview() {
     (st.platform === 'fb' ? 'Facebook' : 'YouTube') + ' Report — ' + isoToDisplay(date);
   document.getElementById('previewOverlay').style.display = 'flex';
 }
-
-function closePreview() {
-  document.getElementById('previewOverlay').style.display = 'none';
-}
-
+function closePreview() { document.getElementById('previewOverlay').style.display = 'none'; }
 function logoTag() {
   if (st.logoB64) return '<img src="' + st.logoB64 + '" alt="logo">';
   return '<div class="rc-logo-def"></div><div class="rc-logo-text">' + esc(st.companyName) + '</div>';
 }
-
-function esc(s) {
-  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-function dash(v) {
-  v = parseInt(v, 10) || 0;
-  return v === 0 ? '-' : (v < 10 ? '0' + v : '' + v);
-}
-
+function esc(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function dash(v) { v = parseInt(v, 10) || 0; return v === 0 ? '-' : (v < 10 ? '0' + v : '' + v); }
 function fmtN(v) {
   v = parseFloat(String(v).replace(/,/g,'')) || 0;
   if (v >= 1000000) return (v/1000000).toFixed(1).replace(/\.0$/,'') + 'M';
@@ -1069,92 +1092,32 @@ function fmtN(v) {
 }
 
 function buildFbCard(date) {
-  var today = {
-    nv: num('fb_nv'), co: num('fb_co'), sn: num('fb_sn'), so: num('fb_so'),
-    cp: num('fb_cp'), th: num('fb_th'), lv: num('fb_lv')
-  };
+  var today = { nv: num('fb_nv'), co: num('fb_co'), sn: num('fb_sn'), so: num('fb_so'), cp: num('fb_cp'), th: num('fb_th'), lv: num('fb_lv') };
   var month = { nv: today.nv, co: today.co, sn: today.sn, so: today.so, cp: today.cp, th: today.th, lv: today.lv };
   var likes = val('fb_lk') || '-';
   var followers = val('fb_fw') || '-';
   var dars = dash(num('fb_wd'));
-
-  return '<div class="rc-head fb">' +
-    '<div class="rc-logo-box">' + logoTag() + '</div>' +
-    '<div class="rc-title-area"><div class="rc-main-title">Daily Facebook</div></div>' +
-    '</div>' +
-    '<div class="rc-date-band"><div class="rc-date-pill fb">Date: ' + isoToDisplay(date) + '</div></div>' +
-    '<table class="rc-table">' +
-    '<tr><th>Sr.N</th><th>Activities</th><th>Today</th><th>This Month</th><th></th></tr>' +
-    '<tr><td class="td-sr">01</td><td class="td-bold">Publish New Video</td><td class="td-num">' + dash(today.nv) + '</td><td class="td-num">' + dash(month.nv) + '</td><td class="td-side" rowspan="2">' + dars + '<br>Weekly Dars</td></tr>' +
-    '<tr><td class="td-sr">02</td><td class="td-bold">Publish Clip From Old Video</td><td class="td-num">' + dash(today.co) + '</td><td class="td-num">' + dash(month.co) + '</td></tr>' +
-    '<tr><td class="td-sr">03</td><td class="td-bold">Short New video</td><td class="td-num">' + dash(today.sn) + '</td><td class="td-num">' + dash(month.sn) + '</td><td class="td-side" rowspan="4"></td></tr>' +
-    '<tr><td class="td-sr">04</td><td class="td-bold">Short from old video clip</td><td class="td-num">' + dash(today.so) + '</td><td class="td-num">' + dash(month.so) + '</td></tr>' +
-    '<tr><td class="td-sr">05</td><td class="td-bold">Community post</td><td class="td-num">' + dash(today.cp) + '</td><td class="td-num">' + dash(month.cp) + '</td></tr>' +
-    '<tr><td class="td-sr">06</td><td class="td-bold">Thumbnail</td><td class="td-num">' + dash(today.th) + '</td><td class="td-num">' + dash(month.th) + '</td></tr>' +
-    '<tr><td class="td-sr">07</td><td class="td-bold">Live</td><td class="td-num">' + dash(today.lv) + '</td><td class="td-num">' + dash(month.lv) + '</td><td class="td-side">Total current</td></tr>' +
-    '<tr><td class="td-sr">08</td><td class="td-bold">Likes</td><td class="td-num">-</td><td class="td-num">-</td><td class="td-side">' + likes + '</td></tr>' +
-    '<tr><td class="td-sr">09</td><td class="td-bold">Followers</td><td class="td-num">-</td><td class="td-num">-</td><td class="td-side">' + followers + '</td></tr>' +
-    '</table>' +
-    '<div class="rc-foot">' + esc(st.companyName) + ' · Generated ' + isoToDisplay(date) + '</div>';
+  return '<div class="rc-head fb"><div class="rc-logo-box">' + logoTag() + '</div><div class="rc-title-area"><div class="rc-main-title">Daily Facebook</div></div></div><div class="rc-date-band"><div class="rc-date-pill fb">Date: ' + isoToDisplay(date) + '</div></div><table class="rc-table"><tr><th>Sr.N</th><th>Activities</th><th>Today</th><th>This Month</th><th></th></tr><tr><td class="td-sr">01</td><td class="td-bold">Publish New Video</td><td class="td-num">' + dash(today.nv) + '</td><td class="td-num">' + dash(month.nv) + '</td><td class="td-side" rowspan="2">' + dars + '<br>Weekly Dars</td></tr><tr><td class="td-sr">02</td><td class="td-bold">Publish Clip From Old Video</td><td class="td-num">' + dash(today.co) + '</td><td class="td-num">' + dash(month.co) + '</td></tr><tr><td class="td-sr">03</td><td class="td-bold">Short New video</td><td class="td-num">' + dash(today.sn) + '</td><td class="td-num">' + dash(month.sn) + '</td><td class="td-side" rowspan="4"></td></tr><tr><td class="td-sr">04</td><td class="td-bold">Short from old video clip</td><td class="td-num">' + dash(today.so) + '</td><td class="td-num">' + dash(month.so) + '</td></tr><tr><td class="td-sr">05</td><td class="td-bold">Community post</td><td class="td-num">' + dash(today.cp) + '</td><td class="td-num">' + dash(month.cp) + '</td></tr><tr><td class="td-sr">06</td><td class="td-bold">Thumbnail</td><td class="td-num">' + dash(today.th) + '</td><td class="td-num">' + dash(month.th) + '</td></tr><tr><td class="td-sr">07</td><td class="td-bold">Live</td><td class="td-num">' + dash(today.lv) + '</td><td class="td-num">' + dash(month.lv) + '</td><td class="td-side">Total current</td></tr><tr><td class="td-sr">08</td><td class="td-bold">Likes</td><td class="td-num">-</td><td class="td-num">-</td><td class="td-side">' + likes + '</td></tr><tr><td class="td-sr">09</td><td class="td-bold">Followers</td><td class="td-num">-</td><td class="td-num">-</td><td class="td-side">' + followers + '</td></tr></table><div class="rc-foot">' + esc(st.companyName) + ' · Generated ' + isoToDisplay(date) + '</div>';
 }
 
 function buildYtCard(date) {
-  var today = {
-    nv: num('yt_nv'), co: num('yt_co'), sn: num('yt_sn'), so: num('yt_so'),
-    cp: num('yt_cp'), th: num('yt_th'), lv: num('yt_lv'),
-    sg: num('yt_sg'), vt: numF('yt_vt')
-  };
+  var today = { nv: num('yt_nv'), co: num('yt_co'), sn: num('yt_sn'), so: num('yt_so'), cp: num('yt_cp'), th: num('yt_th'), lv: num('yt_lv'), sg: num('yt_sg'), vt: numF('yt_vt') };
   var month = { nv: today.nv, co: today.co, sn: today.sn, so: today.so, cp: today.cp, th: today.th, lv: today.lv, sg: today.sg, vt: today.vt };
-  var totalSubs  = val('yt_st') || '-';
+  var totalSubs = val('yt_st') || '-';
   var totalViews = val('yt_va') || '-';
-  var dars   = dash(num('yt_wd'));
+  var dars = dash(num('yt_wd'));
   var pending = dash(num('yt_pa'));
-
-  return '<div class="rc-head yt">' +
-    '<div class="rc-logo-box">' + logoTag() + '</div>' +
-    '<div class="rc-title-area"><div class="rc-main-title">Daily YouTube</div></div>' +
-    '</div>' +
-    '<div class="rc-date-band"><div class="rc-date-pill yt">Date: ' + isoToDisplay(date) + '</div></div>' +
-    '<table class="rc-table yt">' +
-    '<tr><th>Sr.N</th><th>Activities</th><th>Today</th><th>This Month</th><th></th></tr>' +
-    '<tr><td class="td-sr">01</td><td class="td-bold">Publish New Video</td><td class="td-num">' + dash(today.nv) + '</td><td class="td-num">' + dash(month.nv) + '</td><td class="td-side" rowspan="2">' + dars + '<br>Weekly Dars</td></tr>' +
-    '<tr><td class="td-sr">02</td><td class="td-bold">Publish Clip From Old Video</td><td class="td-num">' + dash(today.co) + '</td><td class="td-num">' + dash(month.co) + '</td></tr>' +
-    '<tr><td class="td-sr">03</td><td class="td-bold">Short New video</td><td class="td-num">' + dash(today.sn) + '</td><td class="td-num">' + dash(month.sn) + '</td><td class="td-side hi" rowspan="4">Pending For<br>Approval<br>(' + pending + ')</td></tr>' +
-    '<tr><td class="td-sr">04</td><td class="td-bold">Short from old video Clip</td><td class="td-num">' + dash(today.so) + '</td><td class="td-num">' + dash(month.so) + '</td></tr>' +
-    '<tr><td class="td-sr">05</td><td class="td-bold">Community post</td><td class="td-num">' + dash(today.cp) + '</td><td class="td-num">' + dash(month.cp) + '</td></tr>' +
-    '<tr><td class="td-sr">06</td><td class="td-bold">Thumbnail</td><td class="td-num">' + dash(today.th) + '</td><td class="td-num">' + dash(month.th) + '</td></tr>' +
-    '<tr><td class="td-sr">07</td><td class="td-bold">Live</td><td class="td-num">' + dash(today.lv) + '</td><td class="td-num">' + dash(month.lv) + '</td><td class="td-side">Total current</td></tr>' +
-    '<tr><td class="td-sr">08</td><td class="td-bold">Subscriber</td><td class="td-num">' + dash(today.sg) + '</td><td class="td-num">' + dash(month.sg) + '</td><td class="td-side">' + totalSubs + '</td></tr>' +
-    '<tr><td class="td-sr">09</td><td class="td-bold">Views</td><td class="td-num black">' + fmtN(today.vt) + '</td><td class="td-num black">' + fmtN(month.vt) + '</td><td class="td-side">' + totalViews + '</td></tr>' +
-    '</table>' +
-    '<div class="rc-foot">' + esc(st.companyName) + ' · Generated ' + isoToDisplay(date) + '</div>';
+  return '<div class="rc-head yt"><div class="rc-logo-box">' + logoTag() + '</div><div class="rc-title-area"><div class="rc-main-title">Daily YouTube</div></div></div><div class="rc-date-band"><div class="rc-date-pill yt">Date: ' + isoToDisplay(date) + '</div></div><table class="rc-table yt"><tr><th>Sr.N</th><th>Activities</th><th>Today</th><th>This Month</th><th></th></tr><tr><td class="td-sr">01</td><td class="td-bold">Publish New Video</td><td class="td-num">' + dash(today.nv) + '</td><td class="td-num">' + dash(month.nv) + '</td><td class="td-side" rowspan="2">' + dars + '<br>Weekly Dars</td></tr><tr><td class="td-sr">02</td><td class="td-bold">Publish Clip From Old Video</td><td class="td-num">' + dash(today.co) + '</td><td class="td-num">' + dash(month.co) + '</td></tr><tr><td class="td-sr">03</td><td class="td-bold">Short New video</td><td class="td-num">' + dash(today.sn) + '</td><td class="td-num">' + dash(month.sn) + '</td><td class="td-side hi" rowspan="4">Pending For<br>Approval<br>(' + pending + ')</td></tr><tr><td class="td-sr">04</td><td class="td-bold">Short from old video Clip</td><td class="td-num">' + dash(today.so) + '</td><td class="td-num">' + dash(month.so) + '</td></tr><tr><td class="td-sr">05</td><td class="td-bold">Community post</td><td class="td-num">' + dash(today.cp) + '</td><td class="td-num">' + dash(month.cp) + '</td></tr><tr><td class="td-sr">06</td><td class="td-bold">Thumbnail</td><td class="td-num">' + dash(today.th) + '</td><td class="td-num">' + dash(month.th) + '</td></tr><tr><td class="td-sr">07</td><td class="td-bold">Live</td><td class="td-num">' + dash(today.lv) + '</td><td class="td-num">' + dash(month.lv) + '</td><td class="td-side">Total current</td></tr><tr><td class="td-sr">08</td><td class="td-bold">Subscriber</td><td class="td-num">' + dash(today.sg) + '</td><td class="td-num">' + dash(month.sg) + '</td><td class="td-side">' + totalSubs + '</td></tr><tr><td class="td-sr">09</td><td class="td-bold">Views</td><td class="td-num black">' + fmtN(today.vt) + '</td><td class="td-num black">' + fmtN(month.vt) + '</td><td class="td-side">' + totalViews + '</td></tr></table><div class="rc-foot">' + esc(st.companyName) + ' · Generated ' + isoToDisplay(date) + '</div>';
 }
 
-// ============================================================
-// DOWNLOAD
-// ============================================================
 function downloadCard() {
   var card = document.getElementById('reportCard');
-  if (!card || !card.innerHTML.trim()) {
-    alert('No report to download. Click Preview or Save & Generate first.');
-    return;
-  }
-  if (typeof html2canvas === 'undefined') {
-    alert('Image library not loaded. Make sure you are online when opening the page.');
-    return;
-  }
+  if (!card || !card.innerHTML.trim()) { alert('No report to download.'); return; }
   var date = document.getElementById('dateInput').value;
   var btn = document.querySelector('.prev-btn.dl');
   btn.textContent = 'Generating...';
   btn.disabled = true;
-
-  html2canvas(card, {
-    scale: 2.5,
-    backgroundColor: '#ffffff',
-    logging: false,
-    useCORS: true,
-    allowTaint: true
-  }).then(function(canvas) {
+  html2canvas(card, { scale: 2.5, backgroundColor: '#ffffff', logging: false, useCORS: true }).then(function(canvas) {
     var link = document.createElement('a');
     link.download = st.platform + '_report_' + date + '.png';
     link.href = canvas.toDataURL('image/png');
@@ -1166,7 +1129,7 @@ function downloadCard() {
   }).catch(function(e) {
     btn.textContent = '⬇ Download Image';
     btn.disabled = false;
-    alert('Download failed. Try again or take a screenshot.');
+    alert('Download failed.');
   });
 }
 </script>
