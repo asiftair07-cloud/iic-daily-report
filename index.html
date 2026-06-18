@@ -353,7 +353,7 @@ body{
 .prev-body{
   flex:1;overflow:auto;padding:16px;
   display:flex;justify-content:center;
-  align-items:flex-start;
+  align-items:flex-start; /* Fixes vertical stretching for html2canvas */
 }
 .prev-foot{
   padding:14px 16px max(14px,env(safe-area-inset-bottom));
@@ -369,7 +369,7 @@ body{
 /* ===================== REPORT CARD (CLASSIC STYLE) ===================== */
 #reportCard {
   width: 620px;
-  height: max-content;
+  height: max-content; /* Fixes vertical stretching for html2canvas */
   font-family: Arial, Helvetica, sans-serif;
   background: #fff;
   padding: 15px;
@@ -501,7 +501,6 @@ body{
 <body>
 <div id="app">
 
-<!-- =================== LOGIN PAGE =================== -->
 <div id="loginPage" class="page active">
   <div class="login-box">
     <div class="login-logo" id="loginLogo"><div class="logo-default"></div></div>
@@ -514,7 +513,6 @@ body{
   </div>
 </div>
 
-<!-- =================== MAIN PAGE =================== -->
 <div id="mainPage" class="page">
   <div class="topbar">
     <div class="topbar-inner">
@@ -553,7 +551,6 @@ body{
     <div class="status-bar" id="statusBar"></div>
 
     <div id="entryView">
-      <!-- FACEBOOK FORM -->
       <div id="fbForm">
         <div class="sec">
           <div class="sec-head">📹 Today's Activities</div>
@@ -590,7 +587,6 @@ body{
         </div>
       </div>
 
-      <!-- YOUTUBE FORM -->
       <div id="ytForm" class="hidden">
         <div class="sec">
           <div class="sec-head">📹 Today's Activities</div>
@@ -636,18 +632,11 @@ body{
             <div class="stepper"><button class="st-btn" onclick="adj('yt_pa',-1)">−</button><input class="st-val" type="number" id="yt_pa" value="0" min="0"><button class="st-btn" onclick="adj('yt_pa',1)">+</button></div></div>
         </div>
       </div>
-    </div><!-- /entryView -->
-  </div><!-- /content -->
-</div><!-- /mainPage -->
-</div><!-- /app -->
-
-<!-- BOTTOM BAR -->
-<div class="bottombar" id="bottomBar">
+    </div></div></div></div><div class="bottombar" id="bottomBar">
   <button class="bbar-btn ghost" onclick="generatePreview()">👁 Preview</button>
   <button class="bbar-btn primary" id="saveBtn" onclick="saveEntry()">💾 Save & Generate</button>
 </div>
 
-<!-- =================== SETTINGS OVERLAY =================== -->
 <div class="overlay" id="settingsOverlay">
   <div class="sheet">
     <div class="sheet-title">Settings</div>
@@ -671,7 +660,6 @@ body{
   </div>
 </div>
 
-<!-- =================== PREVIEW OVERLAY =================== -->
 <div id="previewOverlay">
   <div class="prev-head">
     <div class="prev-title" id="prevTitle">Report Preview</div>
@@ -694,7 +682,6 @@ body{
 // ============================================================
 var AIRTABLE_BASE_ID = "appuxIKf7ipI1wbVf";
 var AIRTABLE_TOKEN = "patSwe1HmH9gLstsB.37d4bf64a6a24f9006119b80ab443"+"f78c7d6dcad72450b93b7986aa8a05f99be";
-
 // ============================================================
 // STATE & RECORD TRACKING
 // ============================================================
@@ -707,7 +694,6 @@ var st = {
   pendingLogo: ''
 };
 
-// This tracks if a row already exists in Airtable so we don't duplicate it!
 var currentRecordIds = { fb: null, yt: null };
 
 window.addEventListener('load', function() {
@@ -765,7 +751,7 @@ function doLogout() {
 function showMain() {
   document.getElementById('brandRole').textContent = 'Editor';
   showPage('mainPage');
-  syncFromAirtable(); // Pull data from Cloud immediately upon login!
+  syncFromAirtable();
 }
 
 function showPage(id) {
@@ -807,7 +793,6 @@ function isoToDisplay(iso) {
 }
 
 function onDateChange() {
-  // Pull data from Cloud whenever the date is changed!
   syncFromAirtable();
 }
 
@@ -939,7 +924,6 @@ async function syncFromAirtable() {
   try {
     var formula = encodeURIComponent("{Date}='" + date + "'");
 
-    // Fetch Facebook
     var resFb = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Facebook?filterByFormula=${formula}`, {
       headers: { 'Authorization': `Bearer ${AIRTABLE_TOKEN}` }
     });
@@ -962,7 +946,6 @@ async function syncFromAirtable() {
       currentRecordIds.fb = null;
     }
 
-    // Fetch YouTube
     var resYt = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/YouTube?filterByFormula=${formula}`, {
       headers: { 'Authorization': `Bearer ${AIRTABLE_TOKEN}` }
     });
@@ -987,22 +970,20 @@ async function syncFromAirtable() {
       currentRecordIds.yt = null;
     }
 
-    // If records were totally empty, fall back to local draft/totals to prevent wiping unsaved inputs
     if (!currentRecordIds.fb && !currentRecordIds.yt) {
       loadDraft();
     } else {
-      loadLocalTotalsOnly(); // ensure lifetime totals map over correctly if missing
+      loadLocalTotalsOnly();
     }
-    
     syncText.textContent = 'Synced ✓';
   } catch(e) {
     syncText.textContent = 'Offline';
-    loadDraft(); // Fallback to local device storage if internet is broken
+    loadDraft();
   }
 }
 
 // ============================================================
-// SAVE ENTRY TO AIRTABLE (NOW WITH SMART UPDATE)
+// SAVE ENTRY TO AIRTABLE (SMART UPDATE)
 // ============================================================
 async function saveEntry() {
   saveLastTotals();
@@ -1026,14 +1007,13 @@ async function saveEntry() {
     "Views": numF('yt_vt'), "WeeklyDars": num('yt_wd'), "PendingApproval": num('yt_pa')
   };
 
-  // SMART UPDATE LOGIC
   var recordId = currentRecordIds[st.platform];
   var url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${tableName}`;
-  var method = 'POST'; // Default creates a new row
+  var method = 'POST';
 
   if (recordId) {
     url += `/${recordId}`;
-    method = 'PATCH'; // Updates an existing row to avoid duplicates!
+    method = 'PATCH';
   }
 
   try {
@@ -1048,7 +1028,7 @@ async function saveEntry() {
     
     if (res.ok) {
       var jsonRes = await res.json();
-      currentRecordIds[st.platform] = jsonRes.id; // Remember the ID just in case they click save twice!
+      currentRecordIds[st.platform] = jsonRes.id;
       showStatus(method === 'PATCH' ? 'Updated existing Airtable row! ✓' : 'Saved new row to Airtable! ✓', 'ok');
     } else {
       showStatus('Airtable Error: Connection rejected.', 'err');
@@ -1067,17 +1047,63 @@ function numF(id) { return parseFloat((document.getElementById(id).value || '0')
 function val(id) { return document.getElementById(id).value || ''; }
 
 // ============================================================
-// REPORT CARD PREVIEW
+// REPORT CARD PREVIEW & MONTHLY SUM (CLASSIC STYLE)
 // ============================================================
-function generatePreview() {
+async function calculateMonthTotals(platform, selectedDateStr) {
+  var d = new Date(selectedDateStr);
+  var y = d.getFullYear();
+  var m = String(d.getMonth() + 1).padStart(2, '0');
+  var startOfMonth = y + '-' + m + '-01';
+
+  var totals = { nv: 0, co: 0, sn: 0, so: 0, cp: 0, th: 0, lv: 0, sg: 0, vt: 0 };
+  if (selectedDateStr === startOfMonth) return totals;
+
+  var formula = "AND({Date} >= '" + startOfMonth + "', {Date} < '" + selectedDateStr + "')";
+  var tableName = platform === 'fb' ? 'Facebook' : 'YouTube';
+  var url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${tableName}?filterByFormula=${encodeURIComponent(formula)}`;
+
+  try {
+    var res = await fetch(url, { headers: { 'Authorization': `Bearer ${AIRTABLE_TOKEN}` } });
+    var data = await res.json();
+    if (data.records) {
+      data.records.forEach(function(r) {
+        var f = r.fields;
+        totals.nv += f.NewVideo || 0;
+        totals.co += f.ClipFromOld || 0;
+        totals.sn += f.ShortNew || 0;
+        totals.so += f.ShortFromOld || 0;
+        totals.cp += f.CommunityPost || 0;
+        totals.th += f.Thumbnail || 0;
+        totals.lv += f.Live || 0;
+        totals.sg += f.SubscriberGain || 0;
+        totals.vt += f.Views || 0;
+      });
+    }
+  } catch(e) { console.error("Month fetch failed", e); }
+  return totals;
+}
+
+async function generatePreview() {
   var date = document.getElementById('dateInput').value;
-  var html = st.platform === 'fb' ? buildFbCard(date) : buildYtCard(date);
+  var btn = document.querySelector('.bbar-btn.ghost');
+  var oldText = btn.textContent;
+  btn.innerHTML = '⏳ Calculating...';
+  btn.disabled = true;
+
+  var prevTotals = await calculateMonthTotals(st.platform, date);
+  
+  var html = st.platform === 'fb' ? buildFbCard(date, prevTotals) : buildYtCard(date, prevTotals);
   document.getElementById('reportCard').innerHTML = html;
   document.getElementById('prevTitle').textContent =
     (st.platform === 'fb' ? 'Facebook' : 'YouTube') + ' Report — ' + isoToDisplay(date);
   document.getElementById('previewOverlay').style.display = 'flex';
+
+  btn.textContent = oldText;
+  btn.disabled = false;
 }
+
 function closePreview() { document.getElementById('previewOverlay').style.display = 'none'; }
+
 function logoTag() {
   if (st.logoB64) return '<img src="' + st.logoB64 + '" alt="logo">';
   return '<div class="rc-logo-def"></div><div class="rc-logo-text">' + esc(st.companyName) + '</div>';
@@ -1091,22 +1117,42 @@ function fmtN(v) {
   return String(v);
 }
 
-function buildFbCard(date) {
+function buildFbCard(date, prevTotals) {
   var today = { nv: num('fb_nv'), co: num('fb_co'), sn: num('fb_sn'), so: num('fb_so'), cp: num('fb_cp'), th: num('fb_th'), lv: num('fb_lv') };
-  var month = { nv: today.nv, co: today.co, sn: today.sn, so: today.so, cp: today.cp, th: today.th, lv: today.lv };
+  var month = { 
+    nv: today.nv + prevTotals.nv, 
+    co: today.co + prevTotals.co, 
+    sn: today.sn + prevTotals.sn, 
+    so: today.so + prevTotals.so, 
+    cp: today.cp + prevTotals.cp, 
+    th: today.th + prevTotals.th, 
+    lv: today.lv + prevTotals.lv 
+  };
   var likes = val('fb_lk') || '-';
   var followers = val('fb_fw') || '-';
   var dars = dash(num('fb_wd'));
+
   return '<div class="rc-head fb"><div class="rc-logo-box">' + logoTag() + '</div><div class="rc-title-area"><div class="rc-main-title">Daily Facebook</div></div></div><div class="rc-date-band"><div class="rc-date-pill fb">Date: ' + isoToDisplay(date) + '</div></div><table class="rc-table"><tr><th>Sr.N</th><th>Activities</th><th>Today</th><th>This Month</th><th></th></tr><tr><td class="td-sr">01</td><td class="td-bold">Publish New Video</td><td class="td-num">' + dash(today.nv) + '</td><td class="td-num">' + dash(month.nv) + '</td><td class="td-side" rowspan="2">' + dars + '<br>Weekly Dars</td></tr><tr><td class="td-sr">02</td><td class="td-bold">Publish Clip From Old Video</td><td class="td-num">' + dash(today.co) + '</td><td class="td-num">' + dash(month.co) + '</td></tr><tr><td class="td-sr">03</td><td class="td-bold">Short New video</td><td class="td-num">' + dash(today.sn) + '</td><td class="td-num">' + dash(month.sn) + '</td><td class="td-side" rowspan="4"></td></tr><tr><td class="td-sr">04</td><td class="td-bold">Short from old video clip</td><td class="td-num">' + dash(today.so) + '</td><td class="td-num">' + dash(month.so) + '</td></tr><tr><td class="td-sr">05</td><td class="td-bold">Community post</td><td class="td-num">' + dash(today.cp) + '</td><td class="td-num">' + dash(month.cp) + '</td></tr><tr><td class="td-sr">06</td><td class="td-bold">Thumbnail</td><td class="td-num">' + dash(today.th) + '</td><td class="td-num">' + dash(month.th) + '</td></tr><tr><td class="td-sr">07</td><td class="td-bold">Live</td><td class="td-num">' + dash(today.lv) + '</td><td class="td-num">' + dash(month.lv) + '</td><td class="td-side">Total current</td></tr><tr><td class="td-sr">08</td><td class="td-bold">Likes</td><td class="td-num">-</td><td class="td-num">-</td><td class="td-side">' + likes + '</td></tr><tr><td class="td-sr">09</td><td class="td-bold">Followers</td><td class="td-num">-</td><td class="td-num">-</td><td class="td-side">' + followers + '</td></tr></table><div class="rc-foot">' + esc(st.companyName) + ' · Generated ' + isoToDisplay(date) + '</div>';
 }
 
-function buildYtCard(date) {
+function buildYtCard(date, prevTotals) {
   var today = { nv: num('yt_nv'), co: num('yt_co'), sn: num('yt_sn'), so: num('yt_so'), cp: num('yt_cp'), th: num('yt_th'), lv: num('yt_lv'), sg: num('yt_sg'), vt: numF('yt_vt') };
-  var month = { nv: today.nv, co: today.co, sn: today.sn, so: today.so, cp: today.cp, th: today.th, lv: today.lv, sg: today.sg, vt: today.vt };
+  var month = { 
+    nv: today.nv + prevTotals.nv, 
+    co: today.co + prevTotals.co, 
+    sn: today.sn + prevTotals.sn, 
+    so: today.so + prevTotals.so, 
+    cp: today.cp + prevTotals.cp, 
+    th: today.th + prevTotals.th, 
+    lv: today.lv + prevTotals.lv, 
+    sg: today.sg + prevTotals.sg, 
+    vt: today.vt + prevTotals.vt 
+  };
   var totalSubs = val('yt_st') || '-';
   var totalViews = val('yt_va') || '-';
   var dars = dash(num('yt_wd'));
   var pending = dash(num('yt_pa'));
+
   return '<div class="rc-head yt"><div class="rc-logo-box">' + logoTag() + '</div><div class="rc-title-area"><div class="rc-main-title">Daily YouTube</div></div></div><div class="rc-date-band"><div class="rc-date-pill yt">Date: ' + isoToDisplay(date) + '</div></div><table class="rc-table yt"><tr><th>Sr.N</th><th>Activities</th><th>Today</th><th>This Month</th><th></th></tr><tr><td class="td-sr">01</td><td class="td-bold">Publish New Video</td><td class="td-num">' + dash(today.nv) + '</td><td class="td-num">' + dash(month.nv) + '</td><td class="td-side" rowspan="2">' + dars + '<br>Weekly Dars</td></tr><tr><td class="td-sr">02</td><td class="td-bold">Publish Clip From Old Video</td><td class="td-num">' + dash(today.co) + '</td><td class="td-num">' + dash(month.co) + '</td></tr><tr><td class="td-sr">03</td><td class="td-bold">Short New video</td><td class="td-num">' + dash(today.sn) + '</td><td class="td-num">' + dash(month.sn) + '</td><td class="td-side hi" rowspan="4">Pending For<br>Approval<br>(' + pending + ')</td></tr><tr><td class="td-sr">04</td><td class="td-bold">Short from old video Clip</td><td class="td-num">' + dash(today.so) + '</td><td class="td-num">' + dash(month.so) + '</td></tr><tr><td class="td-sr">05</td><td class="td-bold">Community post</td><td class="td-num">' + dash(today.cp) + '</td><td class="td-num">' + dash(month.cp) + '</td></tr><tr><td class="td-sr">06</td><td class="td-bold">Thumbnail</td><td class="td-num">' + dash(today.th) + '</td><td class="td-num">' + dash(month.th) + '</td></tr><tr><td class="td-sr">07</td><td class="td-bold">Live</td><td class="td-num">' + dash(today.lv) + '</td><td class="td-num">' + dash(month.lv) + '</td><td class="td-side">Total current</td></tr><tr><td class="td-sr">08</td><td class="td-bold">Subscriber</td><td class="td-num">' + dash(today.sg) + '</td><td class="td-num">' + dash(month.sg) + '</td><td class="td-side">' + totalSubs + '</td></tr><tr><td class="td-sr">09</td><td class="td-bold">Views</td><td class="td-num black">' + fmtN(today.vt) + '</td><td class="td-num black">' + fmtN(month.vt) + '</td><td class="td-side">' + totalViews + '</td></tr></table><div class="rc-foot">' + esc(st.companyName) + ' · Generated ' + isoToDisplay(date) + '</div>';
 }
 
