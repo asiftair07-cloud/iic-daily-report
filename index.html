@@ -1068,15 +1068,16 @@ async function calculateMonthTotals(platform, selectedDateStr) {
     if (data.records) {
       data.records.forEach(function(r) {
         var f = r.fields;
-        totals.nv += f.NewVideo || 0;
-        totals.co += f.ClipFromOld || 0;
-        totals.sn += f.ShortNew || 0;
-        totals.so += f.ShortFromOld || 0;
-        totals.cp += f.CommunityPost || 0;
-        totals.th += f.Thumbnail || 0;
-        totals.lv += f.Live || 0;
-        totals.sg += f.SubscriberGain || 0;
-        totals.vt += f.Views || 0;
+        // Strictly force numbers to prevent text gluing
+        totals.nv += parseInt(f.NewVideo, 10) || 0;
+        totals.co += parseInt(f.ClipFromOld, 10) || 0;
+        totals.sn += parseInt(f.ShortNew, 10) || 0;
+        totals.so += parseInt(f.ShortFromOld, 10) || 0;
+        totals.cp += parseInt(f.CommunityPost, 10) || 0;
+        totals.th += parseInt(f.Thumbnail, 10) || 0;
+        totals.lv += parseInt(f.Live, 10) || 0;
+        totals.sg += parseInt(f.SubscriberGain, 10) || 0;
+        totals.vt += parseFloat(f.Views) || 0;
       });
     }
   } catch(e) { console.error("Month fetch failed", e); }
